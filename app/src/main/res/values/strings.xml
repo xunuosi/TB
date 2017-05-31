@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TB</string>
+    <!--home-->
+    <string name="text_match">Match</string>
+    <string name="text_street">Street Basketball</string>
+    <string name="text_bullfighting">1 vs 1</string>
 </resources>

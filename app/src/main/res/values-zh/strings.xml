@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TB</string>
+    <string name="text_match">赛事</string>
+    <string name="text_bullfighting">1 vs 1</string>
+    <string name="text_street">街头</string>
+</resources>
