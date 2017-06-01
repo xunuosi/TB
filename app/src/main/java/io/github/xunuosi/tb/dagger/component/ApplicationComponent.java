@@ -5,8 +5,8 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.github.xunuosi.tb.TBApplication;
 import io.github.xunuosi.tb.dagger.module.ApplicationModule;
+import io.github.xunuosi.tb.view.activity.BaseActivity;
 
 /**
  * Created by xns on 2017/6/1.
@@ -14,7 +14,7 @@ import io.github.xunuosi.tb.dagger.module.ApplicationModule;
 @Singleton
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
-    void inject(TBApplication application);
+    void inject(BaseActivity baseActivity);
 
     Context context();
 }

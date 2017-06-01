@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.github.xunuosi.tb.TBApplication;
+import io.github.xunuosi.tb.dagger.component.ApplicationComponent;
+import io.github.xunuosi.tb.dagger.module.ActivityModule;
 import io.github.xunuosi.tb.utils.ActivityCollector;
 import io.github.xunuosi.tb.utils.PermissionListener;
 
@@ -32,8 +35,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutId());
         ButterKnife.bind(this);
+        this.getApplicationComponent().inject(this);
         ActivityCollector.addActivity(this);
+        initData();
+        initViews();
     }
+
+    protected ApplicationComponent getApplicationComponent() {
+        return ((TBApplication) getApplication()).getApplicationComponent();
+    }
+
+    protected ActivityModule getActivityModule() {
+        return new ActivityModule(this);
+    }
+
+    protected abstract void initViews();
+
+    protected abstract void initData();
 
     @Override
     protected void onDestroy() {

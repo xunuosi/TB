@@ -6,12 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.github.xunuosi.tb.R;
 
 
 /**
@@ -23,11 +27,19 @@ public class SimpleAdapter<T> extends UltimateViewAdapter {
 
     private List<T> mList;
     private LayoutInflater mInflater;
+    private itemOnClickListener mListener;
 
     @Inject
-    public SimpleAdapter(Context context, List<T> list) {
-        mList = list;
+    public SimpleAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<T> data) {
+        mList = data;
+    }
+
+    public void setListener(itemOnClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -42,12 +54,13 @@ public class SimpleAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View view = mInflater.inflate(R.layout.text_item, parent, false);
+        return new TextViewHolder(view);
     }
 
     @Override
     public int getAdapterItemCount() {
-        return 0;
+        return mList == null ? 0 : mList.size();
     }
 
     @Override
@@ -56,8 +69,18 @@ public class SimpleAdapter<T> extends UltimateViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        T bean = mList.get(position);
+        TextViewHolder mHolder = (TextViewHolder) holder;
+        mHolder.mTextView.setText(bean.toString());
+        mHolder.mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,5 +91,18 @@ public class SimpleAdapter<T> extends UltimateViewAdapter {
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+    }
+
+    public interface itemOnClickListener{
+        void onItemClick(int position);
+    }
+
+    private class TextViewHolder extends UltimateRecyclerviewViewHolder {
+        private TextView mTextView;
+
+        public TextViewHolder(View view) {
+            super(view);
+            mTextView = (TextView) view.findViewById(R.id.tv_item_text);
+        }
     }
 }
