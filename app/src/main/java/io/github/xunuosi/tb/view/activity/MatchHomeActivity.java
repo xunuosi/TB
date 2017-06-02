@@ -1,11 +1,18 @@
 package io.github.xunuosi.tb.view.activity;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,19 +36,31 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
     private List<String> data;
     @Inject
     SimpleAdapter<String> mAdapter;
+    @Inject
+    Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.initializeInjector();
         super.onCreate(savedInstanceState);
+    }
+
+    private void initializeInjector() {
+        getApplicationComponent().inject(this);
     }
 
     @Override
     protected void initViews() {
+        mRvMatchHome.setLayoutManager(new LinearLayoutManager(MatchHomeActivity.this));
         mRvMatchHome.setHasFixedSize(false);
         mAdapter.setData(data);
         mRvMatchHome.setAdapter(mAdapter);
-        mRvMatchHome.setLayoutManager(new LinearLayoutManager(MatchHomeActivity.this));
-
+        Paint paint = new Paint();
+        paint.setStrokeWidth(5);
+        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        mRvMatchHome.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
     }
 
     @Override
@@ -61,4 +80,5 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
         s = data.get(position);
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
+
 }

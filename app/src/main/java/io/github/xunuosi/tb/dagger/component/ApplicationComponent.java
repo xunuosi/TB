@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import io.github.xunuosi.tb.dagger.module.ApplicationModule;
 import io.github.xunuosi.tb.view.activity.BaseActivity;
+import io.github.xunuosi.tb.view.activity.MatchHomeActivity;
 
 /**
  * Created by xns on 2017/6/1.
@@ -15,6 +16,6 @@ import io.github.xunuosi.tb.view.activity.BaseActivity;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
-
+    void inject(MatchHomeActivity matchHomeActivity);
     Context context();
 }
