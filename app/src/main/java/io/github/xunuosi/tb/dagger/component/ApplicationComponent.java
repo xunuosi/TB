@@ -8,6 +8,7 @@ import dagger.Component;
 import io.github.xunuosi.tb.dagger.module.ApplicationModule;
 import io.github.xunuosi.tb.view.activity.BaseActivity;
 import io.github.xunuosi.tb.view.activity.MatchHomeActivity;
+import io.github.xunuosi.tb.view.activity.PlayerManagerActivity;
 
 /**
  * Created by xns on 2017/6/1.
@@ -17,5 +18,6 @@ import io.github.xunuosi.tb.view.activity.MatchHomeActivity;
 public interface ApplicationComponent {
     void inject(BaseActivity baseActivity);
     void inject(MatchHomeActivity matchHomeActivity);
+    void inject(PlayerManagerActivity playerManagerActivity);
     Context context();
 }

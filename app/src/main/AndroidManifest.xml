@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.MatchHomeActivity"/>
+        <activity android:name=".view.activity.PlayerManagerActivity"/>
     </application>
 
 </manifest>

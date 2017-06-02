@@ -1,7 +1,6 @@
 package io.github.xunuosi.tb.view.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.Arrays;
@@ -29,6 +27,10 @@ import io.github.xunuosi.tb.view.adapter.SimpleAdapter;
  */
 
 public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.itemOnClickListener{
+    private static final int ACTION_TEC_TOTAL = 0;
+    private static final int ACTION_MATCH_MANAGER = 1;
+    private static final int ACTION_TEAM_MANAGER = 2;
+    private static final int ACTION_PLAYER_MANAGER = 3;
 
     @BindView(R.id.rv_match_home)
     UltimateRecyclerView mRvMatchHome;
@@ -61,6 +63,8 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
         paint.setAntiAlias(true);
         paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         mRvMatchHome.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+
+        mAdapter.setListener(this);
     }
 
     @Override
@@ -76,9 +80,20 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
 
     @Override
     public void onItemClick(int position) {
-        String s;
-        s = data.get(position);
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        switch (position) {
+            case ACTION_TEC_TOTAL:
+
+                break;
+            case ACTION_MATCH_MANAGER:
+
+                break;
+            case ACTION_TEAM_MANAGER:
+
+                break;
+            case ACTION_PLAYER_MANAGER:
+                startActivity(PlayerManagerActivity.getCallIntent(mContext));
+                break;
+        }
     }
 
 }

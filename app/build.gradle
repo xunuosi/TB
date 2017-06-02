@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 25
@@ -33,4 +34,5 @@ dependencies {
     compile 'com.google.dagger:dagger:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.2'
+    compile 'org.greenrobot:greendao:3.2.2'
 }
