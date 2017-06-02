@@ -1,12 +1,18 @@
 package io.github.xunuosi.tb.model.bean;
 
+
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Created by xns on 2017/6/2.
  * 球员的实体类
  */
-
+@Entity(nameInDb = "tb_player")
 public class Player {
-    private int id;
+    @Id(autoincrement = true)
+    private Long id;
     private String sex;
     private String name;
     private int num;
@@ -18,16 +24,31 @@ public class Player {
     public Player() {
     }
 
-    public int getId() {
-        return id;
+
+    @Generated(hash = 1647134109)
+    public Player(Long id, String sex, String name, int num, int teamId,
+            String teamName, String cardNum, String position) {
+        this.id = id;
+        this.sex = sex;
+        this.name = name;
+        this.num = num;
+        this.teamId = teamId;
+        this.teamName = teamName;
+        this.cardNum = cardNum;
+        this.position = position;
+    }
+    
+
+    public Long getId() {
+        return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getSex() {
-        return sex;
+        return this.sex;
     }
 
     public void setSex(String sex) {
@@ -35,7 +56,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -43,7 +64,7 @@ public class Player {
     }
 
     public int getNum() {
-        return num;
+        return this.num;
     }
 
     public void setNum(int num) {
@@ -51,7 +72,7 @@ public class Player {
     }
 
     public int getTeamId() {
-        return teamId;
+        return this.teamId;
     }
 
     public void setTeamId(int teamId) {
@@ -59,7 +80,7 @@ public class Player {
     }
 
     public String getTeamName() {
-        return teamName;
+        return this.teamName;
     }
 
     public void setTeamName(String teamName) {
@@ -67,7 +88,7 @@ public class Player {
     }
 
     public String getCardNum() {
-        return cardNum;
+        return this.cardNum;
     }
 
     public void setCardNum(String cardNum) {
@@ -75,24 +96,11 @@ public class Player {
     }
 
     public String getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(String position) {
         this.position = position;
     }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", sex='" + sex + '\'' +
-                ", name='" + name + '\'' +
-                ", num=" + num +
-                ", teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", cardNum='" + cardNum + '\'' +
-                ", position='" + position + '\'' +
-                '}';
-    }
+    
 }

@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.model.bean.Player;
+import io.github.xunuosi.tb.utils.GreenDaoHelper;
 import io.github.xunuosi.tb.view.adapter.PlayerManagerAdapter;
 
 /**
@@ -89,12 +90,16 @@ public class PlayerManagerActivity extends BaseActivity {
 
     private void addItem() {
         Player player = new Player();
-        player.setId(i);
         player.setName("马克" + i);
         player.setNum(i);
         player.setPosition("组织后卫");
-        i++;
+        player.setSex("男");
+        player.setTeamId(1);
+        player.setTeamName("Elder" + i);
+        player.setCardNum(String.valueOf(i));
         mAdapter.insert(player, 0);
+        GreenDaoHelper.getDaoSession().getPlayerDao().insert(player);
+        i++;
     }
 
     @Override
@@ -106,6 +111,7 @@ public class PlayerManagerActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
+
                 break;
             case R.id.im_add:
                 addItem();
