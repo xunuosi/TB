@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -64,6 +63,7 @@ public class PlayerManagerActivity extends BaseActivity {
     protected void initViews() {
         mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
         mRvPlayerManager.setHasFixedSize(false);
+        mRvPlayerManager.setNestedScrollingEnabled(false);
         mAdapter.setData(mPlayerList);
 
         mRvPlayerManager.setAdapter(mAdapter);
@@ -78,6 +78,14 @@ public class PlayerManagerActivity extends BaseActivity {
     @Override
     protected void initData() {
         mPlayerList = new ArrayList<>();
+        for (int i=0;i<10;i++) {
+            Player player = new Player();
+            player.setId(i);
+            player.setName("马克" + i);
+            player.setNum(i);
+            player.setPosition("组织后卫");
+            mPlayerList.add(player);
+        }
     }
 
     @Override
