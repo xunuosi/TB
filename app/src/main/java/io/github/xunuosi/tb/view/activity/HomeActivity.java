@@ -1,17 +1,22 @@
 package io.github.xunuosi.tb.view.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
+import io.github.xunuosi.tb.utils.PermissionListener;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements PermissionListener {
 
     @BindView(R.id.tv_match)
     TextView tvMatch;
@@ -28,6 +33,13 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkAppPermission();
+    }
+
+    private void checkAppPermission() {
+        addPermissions(new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE},this);
     }
 
     @Override
@@ -52,5 +64,15 @@ public class HomeActivity extends BaseActivity {
             case R.id.tv_bull:
                 break;
         }
+    }
+
+    @Override
+    public void onGranted() {
+
+    }
+
+    @Override
+    public void onDenied(List<String> deniedPermisson) {
+        Toast.makeText(this, "未同意某些权限可能导致某些功能不能使用", Toast.LENGTH_SHORT).show();
     }
 }
