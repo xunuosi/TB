@@ -71,7 +71,6 @@ public class PlayerManagerActivity extends BaseActivity {
     protected void initViews() {
         mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
         mRvPlayerManager.setHasFixedSize(false);
-        mRvPlayerManager.setNestedScrollingEnabled(false);
         mAdapter.setData(mPlayerList);
 
         mRvPlayerManager.setAdapter(mAdapter);
