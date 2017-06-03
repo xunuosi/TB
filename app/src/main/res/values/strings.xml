@@ -9,4 +9,7 @@
     <string name="text_match_manager">Match Manager</string>
     <string name="text_team_manager">Team Manager</string>
     <string name="text_player_manager">Player Manager</string>
+    <string name="text_team_name">Team Name</string>
+    <string name="attention_team_name">Please Input Team Name</string>
+    <string name="action_submit">Submit</string>
 </resources>

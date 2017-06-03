@@ -8,16 +8,21 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
+import io.github.xunuosi.tb.dagger.component.DaggerTMDetailComponent;
+import io.github.xunuosi.tb.dagger.module.TMDetailModule;
+import io.github.xunuosi.tb.presenter.TMDetailPresenter;
+import io.github.xunuosi.tb.view.views.ITMDetailView;
 
 /**
  * Created by admin on 2017/6/3.
  * 队伍管理的详情界面
  */
 
-public class TMDetailActivity extends BaseActivity {
+public class TMDetailActivity extends BaseActivity implements ITMDetailView.View {
     @Inject
     Context mContext;
+    @Inject
+    TMDetailPresenter presenter;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, TMDetailActivity.class);
@@ -30,10 +35,11 @@ public class TMDetailActivity extends BaseActivity {
     }
 
     private void initializeInjector() {
-        DaggerActivityComponent
+        DaggerTMDetailComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .tMDetailModule(new TMDetailModule(this))
                 .build()
                 .inject(this);
     }

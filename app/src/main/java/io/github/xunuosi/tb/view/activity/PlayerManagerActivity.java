@@ -25,7 +25,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.dagger.component.ActivityComponent;
 import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;

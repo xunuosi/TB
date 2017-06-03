@@ -17,9 +17,7 @@ import io.github.xunuosi.tb.view.activity.TeamManagerActivity;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
-//    void inject(TeamManagerActivity teamManagerActivity);
     void inject(PlayerManagerActivity playerManagerActivity);
-    void inject(TMDetailActivity tmDetailActivity);
 
     Activity activity();
 }

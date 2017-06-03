@@ -8,4 +8,7 @@
     <string name="text_player_manager">球员管理</string>
     <string name="text_team_manager">球队管理</string>
     <string name="text_tec_total">赛事技术统计</string>
+    <string name="text_team_name">队伍名称</string>
+    <string name="attention_team_name">请输入队伍名称</string>
+    <string name="action_submit">确认提交</string>
 </resources>
