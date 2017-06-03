@@ -25,6 +25,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
+import io.github.xunuosi.tb.dagger.component.ActivityComponent;
+import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
+import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.utils.GreenDaoHelper;
 import io.github.xunuosi.tb.view.adapter.PlayerManagerAdapter;
@@ -53,6 +56,8 @@ public class PlayerManagerActivity extends BaseActivity {
     PlayerManagerAdapter<Player> mAdapter;
     @Inject
     Context mContext;
+    @Inject
+    DaoSession session;
     private List<Player> mPlayerList;
     private int i = 0;
 
@@ -68,7 +73,12 @@ public class PlayerManagerActivity extends BaseActivity {
     }
 
     private void initializeInjector() {
-        getApplicationComponent().inject(this);
+        DaggerActivityComponent
+                .builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -102,7 +112,7 @@ public class PlayerManagerActivity extends BaseActivity {
         player.setTeamName("Elder" + i);
         player.setCardNum(String.valueOf(i));
         mAdapter.insert(player, 0);
-        GreenDaoHelper.getDaoSession().getPlayerDao().insert(player);
+        session.getPlayerDao().insert(player);
         i++;
     }
 

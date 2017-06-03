@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import io.github.xunuosi.tb.R;
+import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.view.adapter.TeamManagerAdapter;
 
@@ -54,7 +55,12 @@ public class TeamManagerActivity extends BaseActivity {
     }
 
     private void initializeInjector() {
-        getApplicationComponent().inject(this);
+        DaggerActivityComponent
+                .builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build()
+                .inject(this);
     }
 
 
