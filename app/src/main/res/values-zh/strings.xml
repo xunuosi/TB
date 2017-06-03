@@ -4,4 +4,8 @@
     <string name="text_match">赛事</string>
     <string name="text_bullfighting">1 vs 1</string>
     <string name="text_street">街头</string>
+    <string name="text_match_manager">赛事管理</string>
+    <string name="text_player_manager">球员管理</string>
+    <string name="text_team_manager">球队管理</string>
+    <string name="text_tec_total">赛事技术统计</string>
 </resources>

@@ -13,10 +13,13 @@ public class Team {
     @Id(autoincrement = true)
     private Long id;
     private String name;
-    @Generated(hash = 1218157628)
-    public Team(Long id, String name) {
+    private String avator_team;
+
+    @Generated(hash = 863188931)
+    public Team(Long id, String name, String avator_team) {
         this.id = id;
         this.name = name;
+        this.avator_team = avator_team;
     }
     @Generated(hash = 882286361)
     public Team() {
@@ -32,5 +35,11 @@ public class Team {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getAvator_team() {
+        return this.avator_team;
+    }
+    public void setAvator_team(String avator_team) {
+        this.avator_team = avator_team;
     }
 }

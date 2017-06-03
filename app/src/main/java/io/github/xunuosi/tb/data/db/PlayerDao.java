@@ -25,13 +25,14 @@ public class PlayerDao extends AbstractDao<Player, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Sex = new Property(1, String.class, "sex", false, "SEX");
-        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property Num = new Property(3, int.class, "num", false, "NUM");
-        public final static Property TeamId = new Property(4, int.class, "teamId", false, "TEAM_ID");
-        public final static Property TeamName = new Property(5, String.class, "teamName", false, "TEAM_NAME");
-        public final static Property CardNum = new Property(6, String.class, "cardNum", false, "CARD_NUM");
-        public final static Property Position = new Property(7, String.class, "position", false, "POSITION");
+        public final static Property Avator_url = new Property(1, String.class, "avator_url", false, "AVATOR_URL");
+        public final static Property Sex = new Property(2, String.class, "sex", false, "SEX");
+        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
+        public final static Property Num = new Property(4, int.class, "num", false, "NUM");
+        public final static Property TeamId = new Property(5, int.class, "teamId", false, "TEAM_ID");
+        public final static Property TeamName = new Property(6, String.class, "teamName", false, "TEAM_NAME");
+        public final static Property CardNum = new Property(7, String.class, "cardNum", false, "CARD_NUM");
+        public final static Property Position = new Property(8, String.class, "position", false, "POSITION");
     }
 
 
@@ -48,13 +49,14 @@ public class PlayerDao extends AbstractDao<Player, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"tb_player\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"SEX\" TEXT," + // 1: sex
-                "\"NAME\" TEXT," + // 2: name
-                "\"NUM\" INTEGER NOT NULL ," + // 3: num
-                "\"TEAM_ID\" INTEGER NOT NULL ," + // 4: teamId
-                "\"TEAM_NAME\" TEXT," + // 5: teamName
-                "\"CARD_NUM\" TEXT," + // 6: cardNum
-                "\"POSITION\" TEXT);"); // 7: position
+                "\"AVATOR_URL\" TEXT," + // 1: avator_url
+                "\"SEX\" TEXT," + // 2: sex
+                "\"NAME\" TEXT," + // 3: name
+                "\"NUM\" INTEGER NOT NULL ," + // 4: num
+                "\"TEAM_ID\" INTEGER NOT NULL ," + // 5: teamId
+                "\"TEAM_NAME\" TEXT," + // 6: teamName
+                "\"CARD_NUM\" TEXT," + // 7: cardNum
+                "\"POSITION\" TEXT);"); // 8: position
     }
 
     /** Drops the underlying database table. */
@@ -72,31 +74,36 @@ public class PlayerDao extends AbstractDao<Player, Long> {
             stmt.bindLong(1, id);
         }
  
+        String avator_url = entity.getAvator_url();
+        if (avator_url != null) {
+            stmt.bindString(2, avator_url);
+        }
+ 
         String sex = entity.getSex();
         if (sex != null) {
-            stmt.bindString(2, sex);
+            stmt.bindString(3, sex);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(3, name);
+            stmt.bindString(4, name);
         }
-        stmt.bindLong(4, entity.getNum());
-        stmt.bindLong(5, entity.getTeamId());
+        stmt.bindLong(5, entity.getNum());
+        stmt.bindLong(6, entity.getTeamId());
  
         String teamName = entity.getTeamName();
         if (teamName != null) {
-            stmt.bindString(6, teamName);
+            stmt.bindString(7, teamName);
         }
  
         String cardNum = entity.getCardNum();
         if (cardNum != null) {
-            stmt.bindString(7, cardNum);
+            stmt.bindString(8, cardNum);
         }
  
         String position = entity.getPosition();
         if (position != null) {
-            stmt.bindString(8, position);
+            stmt.bindString(9, position);
         }
     }
 
@@ -109,31 +116,36 @@ public class PlayerDao extends AbstractDao<Player, Long> {
             stmt.bindLong(1, id);
         }
  
+        String avator_url = entity.getAvator_url();
+        if (avator_url != null) {
+            stmt.bindString(2, avator_url);
+        }
+ 
         String sex = entity.getSex();
         if (sex != null) {
-            stmt.bindString(2, sex);
+            stmt.bindString(3, sex);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(3, name);
+            stmt.bindString(4, name);
         }
-        stmt.bindLong(4, entity.getNum());
-        stmt.bindLong(5, entity.getTeamId());
+        stmt.bindLong(5, entity.getNum());
+        stmt.bindLong(6, entity.getTeamId());
  
         String teamName = entity.getTeamName();
         if (teamName != null) {
-            stmt.bindString(6, teamName);
+            stmt.bindString(7, teamName);
         }
  
         String cardNum = entity.getCardNum();
         if (cardNum != null) {
-            stmt.bindString(7, cardNum);
+            stmt.bindString(8, cardNum);
         }
  
         String position = entity.getPosition();
         if (position != null) {
-            stmt.bindString(8, position);
+            stmt.bindString(9, position);
         }
     }
 
@@ -146,13 +158,14 @@ public class PlayerDao extends AbstractDao<Player, Long> {
     public Player readEntity(Cursor cursor, int offset) {
         Player entity = new Player( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // sex
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.getInt(offset + 3), // num
-            cursor.getInt(offset + 4), // teamId
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // teamName
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // cardNum
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // position
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // avator_url
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // sex
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
+            cursor.getInt(offset + 4), // num
+            cursor.getInt(offset + 5), // teamId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // teamName
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // cardNum
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // position
         );
         return entity;
     }
@@ -160,13 +173,14 @@ public class PlayerDao extends AbstractDao<Player, Long> {
     @Override
     public void readEntity(Cursor cursor, Player entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setSex(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNum(cursor.getInt(offset + 3));
-        entity.setTeamId(cursor.getInt(offset + 4));
-        entity.setTeamName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setCardNum(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setPosition(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setAvator_url(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setSex(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setNum(cursor.getInt(offset + 4));
+        entity.setTeamId(cursor.getInt(offset + 5));
+        entity.setTeamName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setCardNum(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPosition(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

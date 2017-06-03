@@ -88,7 +88,7 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
 
                 break;
             case ACTION_TEAM_MANAGER:
-
+                startActivity(TeamManagerActivity.getCallIntent(mContext));
                 break;
             case ACTION_PLAYER_MANAGER:
                 startActivity(PlayerManagerActivity.getCallIntent(mContext));

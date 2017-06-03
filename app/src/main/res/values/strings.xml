@@ -4,4 +4,9 @@
     <string name="text_match">Match</string>
     <string name="text_street">Street Basketball</string>
     <string name="text_bullfighting">1 vs 1</string>
+    <!--Match manager-->
+    <string name="text_tec_total">Tec Total</string>
+    <string name="text_match_manager">Match Manager</string>
+    <string name="text_team_manager">Team Manager</string>
+    <string name="text_player_manager">Player Manager</string>
 </resources>

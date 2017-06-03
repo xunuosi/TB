@@ -13,6 +13,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Player {
     @Id(autoincrement = true)
     private Long id;
+    private String avator_url;
     private String sex;
     private String name;
     private int num;
@@ -25,10 +26,11 @@ public class Player {
     }
 
 
-    @Generated(hash = 1647134109)
-    public Player(Long id, String sex, String name, int num, int teamId,
-            String teamName, String cardNum, String position) {
+    @Generated(hash = 1606293319)
+    public Player(Long id, String avator_url, String sex, String name, int num,
+            int teamId, String teamName, String cardNum, String position) {
         this.id = id;
+        this.avator_url = avator_url;
         this.sex = sex;
         this.name = name;
         this.num = num;
@@ -37,7 +39,7 @@ public class Player {
         this.cardNum = cardNum;
         this.position = position;
     }
-    
+
 
     public Long getId() {
         return this.id;
@@ -101,6 +103,16 @@ public class Player {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+
+    public String getAvator_url() {
+        return this.avator_url;
+    }
+
+
+    public void setAvator_url(String avator_url) {
+        this.avator_url = avator_url;
     }
     
 }

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -30,6 +31,7 @@ import io.github.xunuosi.tb.view.adapter.PlayerManagerAdapter;
 
 /**
  * Created by xns on 2017/6/2.
+ *
  */
 
 public class PlayerManagerActivity extends BaseActivity {
@@ -44,6 +46,8 @@ public class PlayerManagerActivity extends BaseActivity {
     ImageButton ivFooterAdd;
     @BindView(R.id.rv_player_manager)
     UltimateRecyclerView mRvPlayerManager;
+    @BindView(R.id.tv_title)
+    AppCompatTextView tvTitle;
 
     @Inject
     PlayerManagerAdapter<Player> mAdapter;
@@ -69,6 +73,7 @@ public class PlayerManagerActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        tvTitle.setText(R.string.text_player_manager);
         mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
         mRvPlayerManager.setHasFixedSize(false);
         mAdapter.setData(mPlayerList);
