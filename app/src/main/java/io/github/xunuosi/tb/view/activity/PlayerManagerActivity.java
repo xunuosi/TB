@@ -29,7 +29,6 @@ import io.github.xunuosi.tb.dagger.component.ActivityComponent;
 import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;
-import io.github.xunuosi.tb.utils.GreenDaoHelper;
 import io.github.xunuosi.tb.view.adapter.PlayerManagerAdapter;
 
 /**
@@ -58,6 +57,7 @@ public class PlayerManagerActivity extends BaseActivity {
     Context mContext;
     @Inject
     DaoSession session;
+
     private List<Player> mPlayerList;
     private int i = 0;
 

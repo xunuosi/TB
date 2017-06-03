@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -15,22 +16,29 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
+import io.github.xunuosi.tb.dagger.component.DaggerTeamManagerComponent;
+import io.github.xunuosi.tb.dagger.module.TeamManagerModule;
 import io.github.xunuosi.tb.model.bean.Team;
+import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
 import io.github.xunuosi.tb.view.adapter.TeamManagerAdapter;
+import io.github.xunuosi.tb.view.views.ITeamManagerActivityView;
 
 /**
  * Created by admin on 2017/6/3.
  * 球队管理界面
  */
 
-public class TeamManagerActivity extends BaseActivity {
+public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView.View {
 
     @Inject
     TeamManagerAdapter<Team> mAdapter;
     @Inject
     Context mContext;
+    @Inject
+    TeamManagerPresenter presenter;
+
     @BindView(R.id.im_back_arrow)
     ImageView imBackArrow;
     @BindView(R.id.im_add)
@@ -55,10 +63,11 @@ public class TeamManagerActivity extends BaseActivity {
     }
 
     private void initializeInjector() {
-        DaggerActivityComponent
+        DaggerTeamManagerComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .teamManagerModule(new TeamManagerModule(this))
                 .build()
                 .inject(this);
     }
@@ -77,5 +86,22 @@ public class TeamManagerActivity extends BaseActivity {
     @Override
     public int setLayoutId() {
         return R.layout.activity_teammanager;
+    }
+
+    @Override
+    public void gotoActivity(Intent intent) {
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.im_back_arrow, R.id.im_add, R.id.iv_footer_add_tm})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.im_back_arrow:
+                break;
+            case R.id.im_add:
+            case R.id.iv_footer_add_tm:
+                presenter.gotoActivity(TMDetailActivity.getCallIntent(mContext));
+                break;
+        }
     }
 }
