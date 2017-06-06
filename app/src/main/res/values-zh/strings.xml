@@ -11,4 +11,7 @@
     <string name="text_team_name">队伍名称</string>
     <string name="attention_team_name">请输入队伍名称</string>
     <string name="action_submit">确认提交</string>
+    <string name="attention_loading_data">数据加载…</string>
+    <string name="attention_sending_data">发送数据…</string>
+    <string name="attention_tName_empty">队伍名为空！</string>
 </resources>

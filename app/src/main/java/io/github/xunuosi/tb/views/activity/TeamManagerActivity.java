@@ -2,14 +2,19 @@ package io.github.xunuosi.tb.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.List;
 
@@ -22,6 +27,7 @@ import io.github.xunuosi.tb.dagger.component.DaggerTeamManagerComponent;
 import io.github.xunuosi.tb.dagger.module.TeamManagerModule;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
+import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.adapter.TeamManagerAdapter;
 import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
@@ -49,7 +55,6 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     ImageButton ivFooterAddTm;
     @BindView(R.id.rv_tm)
     UltimateRecyclerView rvTm;
-    private List<Team> mTeamList;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, TeamManagerActivity.class);
@@ -59,7 +64,6 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
-
     }
 
     private void initializeInjector() {
@@ -80,7 +84,13 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
 
     @Override
     protected void initData() {
+        presenter.initData2Show();
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        presenter.initData2Show();
     }
 
     @Override
@@ -91,6 +101,36 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     @Override
     public void gotoActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public void showView(List<Team> teams) {
+        rvTm.setLayoutManager(new LinearLayoutManager(mContext));
+        rvTm.setHasFixedSize(false);
+        mAdapter.setData(teams);
+        rvTm.setAdapter(mAdapter);
+
+        changeDialogState(false, null);
+
+        Paint paint = new Paint();
+        paint.setStrokeWidth(5);
+        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        rvTm.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+    }
+
+    @Override
+    public void changeDialogState(boolean isShow, @Nullable Integer msgId) {
+        String msg = null;
+        if (msgId != null) {
+            msg = getString(msgId);
+        }
+        if (isShow) {
+            LoadingUtil.showProgressDialog(TeamManagerActivity.this, msg);
+        } else {
+            LoadingUtil.closeProgressDialog();
+        }
     }
 
     @OnClick({R.id.im_back_arrow, R.id.im_add, R.id.iv_footer_add_tm})
@@ -104,4 +144,11 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unbindView();
+    }
+
 }

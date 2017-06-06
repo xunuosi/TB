@@ -17,6 +17,7 @@ import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerTMDetailComponent;
 import io.github.xunuosi.tb.dagger.module.TMDetailModule;
 import io.github.xunuosi.tb.presenter.TMDetailPresenter;
+import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.view.ITMDetailView;
 
 /**
@@ -24,7 +25,7 @@ import io.github.xunuosi.tb.views.view.ITMDetailView;
  * 队伍管理的详情界面
  */
 
-public class TMDetailActivity extends BaseActivity implements ITMDetailView.View {
+public class TMDetailActivity extends BaseActivity implements ITMDetailView {
     @Inject
     Context mContext;
     @Inject
@@ -80,7 +81,32 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView.View
             break;
             case R.id.im_add:
             case R.id.btn_tm_detail_submit:
+                presenter.addTeam(null, etTeamName.getText().toString().trim());
                 break;
         }
+    }
+
+    @Override
+    public void gotoActivity(Intent intent) {
+        finish();
+    }
+
+    @Override
+    public void changeDialogState(boolean isShow, @Nullable Integer msgId) {
+        String msg = null;
+        if (msgId != null) {
+            msg = getString(msgId);
+        }
+        if (isShow) {
+            LoadingUtil.showProgressDialog(TMDetailActivity.this, msg);
+        } else {
+            LoadingUtil.closeProgressDialog();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unbindView();
     }
 }

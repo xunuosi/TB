@@ -13,21 +13,21 @@ import io.github.xunuosi.tb.views.view.ITMDetailView;
  */
 @Module
 public class TMDetailModule {
-    private ITMDetailView.View view;
+    private ITMDetailView view;
 
-    public TMDetailModule(ITMDetailView.View view) {
+    public TMDetailModule(ITMDetailView view) {
         this.view = view;
     }
 
     @Provides
     @PerActivity
-    ITMDetailView.View provideITMDetailView() {
+    ITMDetailView provideITMDetailView() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    TMDetailPresenter provideITMDetailPresenter(ITMDetailView.View view, DaoSession daoSession) {
+    TMDetailPresenter provideITMDetailPresenter(ITMDetailView view, DaoSession daoSession) {
         return new TMDetailPresenter(view, daoSession);
     }
 }

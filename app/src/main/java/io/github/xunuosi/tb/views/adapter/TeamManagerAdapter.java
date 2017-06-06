@@ -1,25 +1,19 @@
 package io.github.xunuosi.tb.views.adapter;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.model.bean.Team;
+import io.github.xunuosi.tb.views.holder.TeamItemHolder;
 
 /**
  * Created by xns on 2017/6/2.
@@ -41,11 +35,7 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder = null;
-        View layout = null;
-        layout = layoutInflater.inflate(R.layout.item_team_manager, parent, false);
-        holder = new TeamItemHolder(layout);
-        return holder;
+        return new TeamItemHolder<T>(layoutInflater.inflate(R.layout.item_team_manager, parent, false));
     }
 
     @Override
@@ -53,7 +43,7 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
         T bean = mList.get(position);
         if (bean instanceof Team) {
             TeamItemHolder mHolder = (TeamItemHolder) holder;
-            mHolder.tvItemTmName.setText(((Team) bean).getName());
+            mHolder.bindData(bean);
         }
     }
 
@@ -103,17 +93,4 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
 
     }
 
-    public class TeamItemHolder extends UltimateRecyclerviewViewHolder {
-        @BindView(R.id.iv_item_tm_avator)
-        ImageView ivItemTmAvator;
-        @BindView(R.id.tv_item_tm_name)
-        TextView tvItemTmName;
-        @BindView(R.id.item_tm_root)
-        ConstraintLayout itemTmRoot;
-
-        TeamItemHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 }
