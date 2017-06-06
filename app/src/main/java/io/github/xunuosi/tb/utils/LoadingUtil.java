@@ -5,7 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.view.widget.MyProgressDialog;
+import io.github.xunuosi.tb.views.widget.MyProgressDialog;
 
 
 /**

@@ -4,7 +4,6 @@ import dagger.Component;
 import io.github.xunuosi.tb.dagger.PerActivity;
 import io.github.xunuosi.tb.dagger.module.ActivityModule;
 import io.github.xunuosi.tb.dagger.module.UserModule;
-import io.github.xunuosi.tb.view.activity.MatchHomeActivity;
 
 /**
  * Created by xns on 2017/6/2.

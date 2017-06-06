@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.adapter;
+package io.github.xunuosi.tb.views.adapter;
 
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,8 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;

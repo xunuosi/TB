@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.views;
+package io.github.xunuosi.tb.views.view;
 
 import android.content.Intent;
 
@@ -8,12 +8,6 @@ import android.content.Intent;
  */
 
 public interface ITeamManagerActivityView {
-
-    interface View {
         void gotoActivity(Intent intent);
-    }
 
-    interface Presenter {
-        void gotoActivity(Intent intent);
-    }
 }

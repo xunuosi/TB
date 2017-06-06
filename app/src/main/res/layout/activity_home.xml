@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.xunuosi.tb.view.activity.HomeActivity">
+    tools:context="io.github.xunuosi.tb.views.activity.HomeActivity">
 
     <TextView
         android:id="@+id/tv_match"

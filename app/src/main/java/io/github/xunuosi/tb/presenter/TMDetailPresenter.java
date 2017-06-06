@@ -3,7 +3,7 @@ package io.github.xunuosi.tb.presenter;
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.data.db.DaoSession;
-import io.github.xunuosi.tb.view.views.ITMDetailView;
+import io.github.xunuosi.tb.views.view.ITMDetailView;
 
 /**
  * Created by admin on 2017/6/3.

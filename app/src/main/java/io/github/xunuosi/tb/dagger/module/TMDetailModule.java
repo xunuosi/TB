@@ -5,7 +5,7 @@ import dagger.Provides;
 import io.github.xunuosi.tb.dagger.PerActivity;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.presenter.TMDetailPresenter;
-import io.github.xunuosi.tb.view.views.ITMDetailView;
+import io.github.xunuosi.tb.views.view.ITMDetailView;
 
 /**
  * Created by admin on 2017/6/3.

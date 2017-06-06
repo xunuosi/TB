@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,15 +22,15 @@ import io.github.xunuosi.tb.dagger.component.DaggerTeamManagerComponent;
 import io.github.xunuosi.tb.dagger.module.TeamManagerModule;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
-import io.github.xunuosi.tb.view.adapter.TeamManagerAdapter;
-import io.github.xunuosi.tb.view.views.ITeamManagerActivityView;
+import io.github.xunuosi.tb.views.adapter.TeamManagerAdapter;
+import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 /**
  * Created by admin on 2017/6/3.
  * 球队管理界面
  */
 
-public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView.View {
+public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView {
 
     @Inject
     TeamManagerAdapter<Team> mAdapter;

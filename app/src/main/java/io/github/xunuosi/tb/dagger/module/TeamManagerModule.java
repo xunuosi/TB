@@ -5,28 +5,29 @@ import dagger.Provides;
 import io.github.xunuosi.tb.dagger.PerActivity;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
-import io.github.xunuosi.tb.view.views.ITeamManagerActivityView;
+import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 /**
  * Created by admin on 2017/6/3.
+ *
  */
 @Module
 public class TeamManagerModule {
-    private ITeamManagerActivityView.View view;
+    private ITeamManagerActivityView view;
 
-    public TeamManagerModule(ITeamManagerActivityView.View view) {
+    public TeamManagerModule(ITeamManagerActivityView view) {
         this.view = view;
     }
 
     @Provides
     @PerActivity
-    ITeamManagerActivityView.View provideTeamManagerView() {
+    ITeamManagerActivityView provideTeamManagerView() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    TeamManagerPresenter provideTeamManagerPresenter(ITeamManagerActivityView.View view, DaoSession daoSession) {
+    TeamManagerPresenter provideTeamManagerPresenter(ITeamManagerActivityView view, DaoSession daoSession) {
         return new TeamManagerPresenter(view, daoSession);
     }
 }

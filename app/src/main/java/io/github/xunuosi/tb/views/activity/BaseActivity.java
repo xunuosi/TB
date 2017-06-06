@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;

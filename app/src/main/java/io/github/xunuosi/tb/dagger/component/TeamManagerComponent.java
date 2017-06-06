@@ -4,7 +4,7 @@ import dagger.Component;
 import io.github.xunuosi.tb.dagger.PerActivity;
 import io.github.xunuosi.tb.dagger.module.ActivityModule;
 import io.github.xunuosi.tb.dagger.module.TeamManagerModule;
-import io.github.xunuosi.tb.view.activity.TeamManagerActivity;
+import io.github.xunuosi.tb.views.activity.TeamManagerActivity;
 
 /**
  * Created by admin on 2017/6/3.

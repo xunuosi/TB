@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerTMDetailComponent;
 import io.github.xunuosi.tb.dagger.module.TMDetailModule;
 import io.github.xunuosi.tb.presenter.TMDetailPresenter;
-import io.github.xunuosi.tb.view.views.ITMDetailView;
+import io.github.xunuosi.tb.views.view.ITMDetailView;
 
 /**
  * Created by admin on 2017/6/3.
@@ -80,20 +80,6 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView.View
             break;
             case R.id.im_add:
             case R.id.btn_tm_detail_submit:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 break;
         }
     }

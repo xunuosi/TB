@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.content.Context;
 import android.graphics.DashPathEffect;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
@@ -19,7 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.view.adapter.SimpleAdapter;
+import io.github.xunuosi.tb.views.adapter.SimpleAdapter;
 
 /**
  * Created by xns on 2017/6/1.

@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.widget;
+package io.github.xunuosi.tb.views.widget;
 
 import android.app.ProgressDialog;
 import android.content.Context;

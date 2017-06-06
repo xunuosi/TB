@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.views;
+package io.github.xunuosi.tb.views.view;
 
 /**
  * Created by admin on 2017/6/3.

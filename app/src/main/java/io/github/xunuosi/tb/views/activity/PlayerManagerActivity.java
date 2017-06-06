@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.activity;
+package io.github.xunuosi.tb.views.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;
-import io.github.xunuosi.tb.view.adapter.PlayerManagerAdapter;
+import io.github.xunuosi.tb.views.adapter.PlayerManagerAdapter;
 
 /**
  * Created by xns on 2017/6/2.

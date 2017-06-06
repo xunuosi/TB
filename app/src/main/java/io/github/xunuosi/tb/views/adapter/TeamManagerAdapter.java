@@ -1,4 +1,4 @@
-package io.github.xunuosi.tb.view.adapter;
+package io.github.xunuosi.tb.views.adapter;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.List;
@@ -18,19 +19,19 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.model.bean.Player;
+import io.github.xunuosi.tb.model.bean.Team;
 
 /**
  * Created by xns on 2017/6/2.
  *
  */
 
-public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
+public class TeamManagerAdapter<T> extends UltimateViewAdapter {
     private List<T> mList;
     private LayoutInflater layoutInflater;
 
     @Inject
-    public PlayerManagerAdapter(Context context) {
+    public TeamManagerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -42,19 +43,17 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         View layout = null;
-        layout = layoutInflater.inflate(R.layout.item_playermanager, parent, false);
-        holder = new PlayerItem(layout);
+        layout = layoutInflater.inflate(R.layout.item_team_manager, parent, false);
+        holder = new TeamItemHolder(layout);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         T bean = mList.get(position);
-        if (bean instanceof Player) {
-            PlayerItem mHolder = (PlayerItem) holder;
-            mHolder.mTvItemPmName.setText(((Player) bean).getName());
-            mHolder.mTvItemPmNum.setText(String.valueOf(((Player) bean).getNum()));
-            mHolder.mTvItemPmPosition.setText(((Player) bean).getPosition());
+        if (bean instanceof Team) {
+            TeamItemHolder mHolder = (TeamItemHolder) holder;
+            mHolder.tvItemTmName.setText(((Team) bean).getName());
         }
     }
 
@@ -104,19 +103,15 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
 
     }
 
-    public class PlayerItem extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_item_pm_avator)
-        ImageView mIvItemPmAvator;
-        @BindView(R.id.tv_item_pm_name)
-        TextView mTvItemPmName;
-        @BindView(R.id.tv_item_pm_num)
-        TextView mTvItemPmNum;
-        @BindView(R.id.tv_item_pm_position)
-        TextView mTvItemPmPosition;
-        @BindView(R.id.item_pm_root)
-        ConstraintLayout mItemPmRoot;
+    public class TeamItemHolder extends UltimateRecyclerviewViewHolder {
+        @BindView(R.id.iv_item_tm_avator)
+        ImageView ivItemTmAvator;
+        @BindView(R.id.tv_item_tm_name)
+        TextView tvItemTmName;
+        @BindView(R.id.item_tm_root)
+        ConstraintLayout itemTmRoot;
 
-        PlayerItem(View view) {
+        TeamItemHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

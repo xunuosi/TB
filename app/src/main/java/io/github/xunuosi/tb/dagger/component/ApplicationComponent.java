@@ -7,8 +7,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 import io.github.xunuosi.tb.dagger.module.ApplicationModule;
 import io.github.xunuosi.tb.data.db.DaoSession;
-import io.github.xunuosi.tb.view.activity.BaseActivity;
-import io.github.xunuosi.tb.view.activity.MatchHomeActivity;
+import io.github.xunuosi.tb.views.activity.BaseActivity;
+import io.github.xunuosi.tb.views.activity.MatchHomeActivity;
 
 /**
  * Created by xns on 2017/6/1.

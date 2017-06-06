@@ -5,27 +5,29 @@ import android.content.Intent;
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.data.db.DaoSession;
-import io.github.xunuosi.tb.view.views.ITeamManagerActivityView;
+import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 /**
  * Created by admin on 2017/6/3.
  */
 
-public class TeamManagerPresenter implements ITeamManagerActivityView.Presenter {
-
-    private ITeamManagerActivityView.View view;
-    private DaoSession daoSession;
+public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView, DaoSession> {
 
     @Inject
-    public TeamManagerPresenter(ITeamManagerActivityView.View view, DaoSession daoSession) {
-        this.view = view;
-        this.daoSession = daoSession;
+    public TeamManagerPresenter(ITeamManagerActivityView view, DaoSession daoSession) {
+        bindView(view);
+        setModel(daoSession);
     }
 
-    @Override
     public void gotoActivity(Intent intent) {
         if (intent != null) {
-            view.gotoActivity(intent);
+            view().gotoActivity(intent);
         }
+    }
+
+
+    @Override
+    protected void updateView() {
+
     }
 }
