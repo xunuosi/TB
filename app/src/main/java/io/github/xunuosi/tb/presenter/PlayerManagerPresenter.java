@@ -9,9 +9,8 @@ import javax.inject.Inject;
 
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.data.db.DaoSession;
-import io.github.xunuosi.tb.model.bean.Team;
+import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
-import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 /**
  * Created by admin on 2017/6/3.
@@ -20,7 +19,7 @@ import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivityView, DaoSession> {
 
-    private List<Team> teams = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
     @Inject
     public PlayerManagerPresenter(IPlayerManagerActivityView view, DaoSession daoSession) {
@@ -41,6 +40,11 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
     }
 
     public void initData2Show() {
+        view().changeDialogState(true, R.string.attention_loading_data);
+        players = model.getPlayerDao().loadAll();
+        if (players != null || players.size() != 0) {
+            view().showView(players);
+        }
 
     }
 }

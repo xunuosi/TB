@@ -84,12 +84,12 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
 
     @Override
     protected void initData() {
-        presenter.initData2Show();
+
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onStart() {
+        super.onStart();
         presenter.initData2Show();
     }
 

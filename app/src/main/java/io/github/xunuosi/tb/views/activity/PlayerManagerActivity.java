@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,6 +29,7 @@ import io.github.xunuosi.tb.dagger.module.PlayerManagerModule;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.presenter.PlayerManagerPresenter;
+import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.adapter.PlayerManagerAdapter;
 import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
@@ -62,9 +62,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     @Inject
     PlayerManagerPresenter presenter;
 
-    private List<Player> mPlayerList;
-    private int i = 0;
-
     public static Intent getCallIntent(Context context) {
         return new Intent(context, PlayerManagerActivity.class);
     }
@@ -74,6 +71,12 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         this.initializeInjector();
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.initData2Show();
     }
 
     private void initializeInjector() {
@@ -89,36 +92,25 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     @Override
     protected void initViews() {
         tvTitle.setText(R.string.text_player_manager);
-        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
-        mRvPlayerManager.setHasFixedSize(false);
-        mAdapter.setData(mPlayerList);
-
-        mRvPlayerManager.setAdapter(mAdapter);
-        Paint paint = new Paint();
-        paint.setStrokeWidth(5);
-        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
-        paint.setAntiAlias(true);
-        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
-        mRvPlayerManager.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
     }
 
     @Override
     protected void initData() {
-        mPlayerList = new ArrayList<>();
+
     }
 
     private void addItem() {
-        Player player = new Player();
-        player.setName("马克" + i);
-        player.setNum(i);
-        player.setPosition("组织后卫");
-        player.setSex("男");
-        player.setTeamId(1);
-        player.setTeamName("Elder" + i);
-        player.setCardNum(String.valueOf(i));
-        mAdapter.insert(player, 0);
-        session.getPlayerDao().insert(player);
-        i++;
+//        Player player = new Player();
+//        player.setName("马克" + i);
+//        player.setNum(i);
+//        player.setPosition("组织后卫");
+//        player.setSex("男");
+//        player.setTeamId(1);
+//        player.setTeamName("Elder" + i);
+//        player.setCardNum(String.valueOf(i));
+//        mAdapter.insert(player, 0);
+//        session.getPlayerDao().insert(player);
+
     }
 
     @Override
@@ -133,26 +125,50 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 
                 break;
             case R.id.im_add:
-                addItem();
-                break;
             case R.id.iv_footer_add:
-                addItem();
+                presenter.gotoActivity(TMDetailActivity.getCallIntent(mContext));
                 break;
         }
     }
 
     @Override
     public void gotoActivity(Intent intent) {
-
+        startActivity(intent);
     }
 
     @Override
     public void changeDialogState(boolean isShow, @Nullable Integer msgId) {
-
+        String msg = null;
+        if (msgId != null) {
+            msg = getString(msgId);
+        }
+        if (isShow) {
+            LoadingUtil.showProgressDialog(PlayerManagerActivity.this, msg);
+        } else {
+            LoadingUtil.closeProgressDialog();
+        }
     }
 
     @Override
     public void showView(List<Player> players) {
+        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvPlayerManager.setHasFixedSize(false);
+        mRvPlayerManager.setAdapter(mAdapter);
+        mAdapter.setData(players);
 
+        Paint paint = new Paint();
+        paint.setStrokeWidth(5);
+        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        mRvPlayerManager.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+
+        changeDialogState(false, null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unbindView();
     }
 }
