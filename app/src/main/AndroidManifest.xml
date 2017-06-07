@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.activity.MatchHomeActivity"/>
-        <activity android:name=".views.activity.PlayerManagerActivity"/>
+        <activity android:name=".views.activity.PlayerManagerActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".views.activity.TeamManagerActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".views.activity.TMDetailActivity"/>

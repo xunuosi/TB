@@ -13,7 +13,6 @@ import io.github.xunuosi.tb.views.activity.PlayerManagerActivity;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
-    void inject(PlayerManagerActivity playerManagerActivity);
 
     Activity activity();
 }

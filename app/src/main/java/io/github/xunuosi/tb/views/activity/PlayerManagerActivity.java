@@ -25,17 +25,20 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
-import io.github.xunuosi.tb.dagger.component.DaggerActivityComponent;
+import io.github.xunuosi.tb.dagger.component.DaggerPlayerManagerComponent;
+import io.github.xunuosi.tb.dagger.module.PlayerManagerModule;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Player;
+import io.github.xunuosi.tb.presenter.PlayerManagerPresenter;
 import io.github.xunuosi.tb.views.adapter.PlayerManagerAdapter;
+import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
 /**
  * Created by xns on 2017/6/2.
  *
  */
 
-public class PlayerManagerActivity extends BaseActivity {
+public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView {
 
     @BindView(R.id.im_back_arrow)
     ImageView mImBackArrow;
@@ -56,6 +59,8 @@ public class PlayerManagerActivity extends BaseActivity {
     Context mContext;
     @Inject
     DaoSession session;
+    @Inject
+    PlayerManagerPresenter presenter;
 
     private List<Player> mPlayerList;
     private int i = 0;
@@ -72,10 +77,11 @@ public class PlayerManagerActivity extends BaseActivity {
     }
 
     private void initializeInjector() {
-        DaggerActivityComponent
+        DaggerPlayerManagerComponent
                 .builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .playerManagerModule(new PlayerManagerModule(this))
                 .build()
                 .inject(this);
     }
@@ -133,5 +139,20 @@ public class PlayerManagerActivity extends BaseActivity {
                 addItem();
                 break;
         }
+    }
+
+    @Override
+    public void gotoActivity(Intent intent) {
+
+    }
+
+    @Override
+    public void changeDialogState(boolean isShow, @Nullable Integer msgId) {
+
+    }
+
+    @Override
+    public void showView(List<Player> players) {
+
     }
 }
