@@ -17,4 +17,5 @@
     <string name="text_into_manager_player">进入球员修改</string>
     <string name="text_cancel">取消返回</string>
     <string name="text_choose_team">选择球队</string>
+    <string name="attention_team_is_empty">球队选择为空</string>
 </resources>

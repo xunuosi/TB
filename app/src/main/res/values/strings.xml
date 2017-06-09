@@ -18,4 +18,5 @@
     <string name="text_into_manager_player">Go to Player Manager</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_choose_team">Choose Team</string>
+    <string name="attention_team_is_empty">Team is empty</string>
 </resources>
