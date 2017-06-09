@@ -15,5 +15,6 @@ import io.github.xunuosi.tb.model.bean.Team;
 public interface IChooseTeamActivityView {
         void gotoActivity(Intent intent);
         void changeDialogState(boolean isShow, @Nullable Integer msgId);
-        void showView(List<Team> teams);
+
+        void showErrorToastMsg(int msgId);
 }

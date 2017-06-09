@@ -35,7 +35,6 @@ import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
 /**
  * Created by xns on 2017/6/2.
- *
  */
 
 public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView {
@@ -62,6 +61,8 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     @Inject
     PlayerManagerPresenter presenter;
 
+    private Paint paint = new Paint();
+
     public static Intent getCallIntent(Context context) {
         return new Intent(context, PlayerManagerActivity.class);
     }
@@ -70,13 +71,10 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.initData2Show();
+        Intent intent = getIntent();
+        if (intent != null) {
+            presenter.initData2Show(intent);
+        }
     }
 
     private void initializeInjector() {
@@ -156,7 +154,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         mRvPlayerManager.setAdapter(mAdapter);
         mAdapter.setData(players);
 
-        Paint paint = new Paint();
         paint.setStrokeWidth(5);
         paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
         paint.setAntiAlias(true);
@@ -168,7 +165,7 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.unbindView();
+        super.onDestroy();
     }
 }

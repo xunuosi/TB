@@ -5,5 +5,9 @@ package io.github.xunuosi.tb.model;
  * App的全局常量
  */
 
-public interface AppContants {
+public interface AppConstant {
+
+    interface Team {
+        String TEAM_ID = "team_id";
+    }
 }

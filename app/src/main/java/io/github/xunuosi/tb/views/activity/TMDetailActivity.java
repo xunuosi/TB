@@ -106,7 +106,7 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.unbindView();
+        super.onDestroy();
     }
 }

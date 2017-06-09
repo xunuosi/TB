@@ -9,7 +9,6 @@ import java.util.List;
 import dagger.Module;
 import dagger.Provides;
 import io.github.xunuosi.tb.dagger.PerActivity;
-import io.github.xunuosi.tb.dagger.component.ApplicationComponent;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.presenter.ChooseTeamPresenter;
@@ -37,12 +36,6 @@ public class ChooseTeamModule {
     @PerActivity
     ChooseTeamPresenter provideChooseTeamPresenter(IChooseTeamActivityView view, DaoSession daoSession) {
         return new ChooseTeamPresenter(view, daoSession);
-    }
-
-    @Provides
-    @PerActivity
-    List<Team> provideTeamList(DaoSession daoSession) {
-        return daoSession.getTeamDao().loadAll();
     }
 
     @Provides

@@ -147,8 +147,8 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.unbindView();
+        super.onDestroy();
     }
 
 }
