@@ -90,7 +90,7 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
                 startActivity(TeamManagerActivity.getCallIntent(mContext));
                 break;
             case ACTION_PLAYER_MANAGER:
-                startActivity(PlayerManagerActivity.getCallIntent(mContext));
+                startActivity(ChooseTeamActivity.getCallIntent(mContext));
                 break;
         }
     }

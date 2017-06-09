@@ -42,7 +42,7 @@ public class PMDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-//        tvTitle.setText(R.string.text_team_manager);
+//        tvTitle.setText(R.string.text_player_manager);
     }
 
     @Override

@@ -25,6 +25,7 @@
         <activity android:name=".views.activity.TeamManagerActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".views.activity.TMDetailActivity"/>
+        <activity android:name=".views.activity.ChooseTeamActivity"/>
     </application>
 
 </manifest>

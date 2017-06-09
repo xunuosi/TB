@@ -14,4 +14,7 @@
     <string name="attention_loading_data">数据加载…</string>
     <string name="attention_sending_data">发送数据…</string>
     <string name="attention_tName_empty">队伍名为空！</string>
+    <string name="text_into_manager_player">进入球员修改</string>
+    <string name="text_cancel">取消返回</string>
+    <string name="text_choose_team">选择球队</string>
 </resources>

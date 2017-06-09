@@ -15,4 +15,7 @@
     <string name="attention_loading_data">Loading…</string>
     <string name="attention_sending_data">Send…</string>
     <string name="attention_tName_empty">Team is empty</string>
+    <string name="text_into_manager_player">Go to Player Manager</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_choose_team">Choose Team</string>
 </resources>
