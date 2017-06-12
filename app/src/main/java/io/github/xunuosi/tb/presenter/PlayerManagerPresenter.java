@@ -25,6 +25,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
 
     private List<Player> players = new ArrayList<>();
     private Long teamId;
+    private String tName;
 
     @Inject
     public PlayerManagerPresenter(IPlayerManagerActivityView view, DaoSession daoSession) {
@@ -34,6 +35,8 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
 
     public void gotoActivity(Intent intent) {
         if (intent != null) {
+            intent.putExtra(AppConstant.Team.TEAM_ID, teamId);
+            intent.putExtra(AppConstant.Team.TEAM_NAME, tName);
             view().gotoActivity(intent);
         }
     }
@@ -47,6 +50,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
     public void initData2Show(Intent intent) {
         view().changeDialogState(true, R.string.attention_loading_data);
         teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
+        tName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
         if (teamId != -1) {
             QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
             queryBuilder.where(PlayerDao.Properties.TeamId.eq(teamId));
