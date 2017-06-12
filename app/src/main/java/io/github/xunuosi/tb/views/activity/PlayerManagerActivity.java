@@ -35,6 +35,7 @@ import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
 /**
  * Created by xns on 2017/6/2.
+ *
  */
 
 public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView {
@@ -124,7 +125,7 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
                 break;
             case R.id.im_add:
             case R.id.iv_footer_add:
-                presenter.gotoActivity(TMDetailActivity.getCallIntent(mContext));
+                presenter.gotoActivity(PMDetailActivity.getCallIntent(mContext));
                 break;
         }
     }

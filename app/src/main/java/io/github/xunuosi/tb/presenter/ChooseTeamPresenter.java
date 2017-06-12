@@ -62,6 +62,9 @@ public class ChooseTeamPresenter extends BasePresenter<IChooseTeamActivityView, 
         if (teams.size() == 0) {
             teams = model.getTeamDao().loadAll();
         }
+        if (teams == null || teams.size() == 0) {
+            return true;
+        }
         return TextUtils.isEmpty(teams.get(position).getName().trim());
     }
 }

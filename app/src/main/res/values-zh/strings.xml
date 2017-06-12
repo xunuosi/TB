@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TB</string>
+    <!--Text-->
     <string name="text_match">赛事</string>
     <string name="text_bullfighting">1 vs 1</string>
     <string name="text_street">街头</string>
@@ -9,13 +10,19 @@
     <string name="text_team_manager">球队管理</string>
     <string name="text_tec_total">赛事技术统计</string>
     <string name="text_team_name">队伍名称</string>
-    <string name="attention_team_name">请输入队伍名称</string>
-    <string name="action_submit">确认提交</string>
-    <string name="attention_loading_data">数据加载…</string>
-    <string name="attention_sending_data">发送数据…</string>
-    <string name="attention_tName_empty">队伍名为空！</string>
     <string name="text_into_manager_player">进入球员修改</string>
     <string name="text_cancel">取消返回</string>
     <string name="text_choose_team">选择球队</string>
+    <string name="text_player_name">球员姓名</string>
+    <string name="text_team_position">球队位置</string>
+    <string name="text_team_number">球队号码</string>
+    <!--Action-->
+    <string name="action_submit">确认提交</string>
+    <!--Attention-->
+    <string name="attention_loading_data">数据加载…</string>
+    <string name="attention_sending_data">发送数据…</string>
+    <string name="attention_tName_empty">队伍名为空！</string>
     <string name="attention_team_is_empty">球队选择为空</string>
+    <string name="attention_team_name">请输入队伍名称</string>
+    <string name="attention_please_input">请输入</string>
 </resources>

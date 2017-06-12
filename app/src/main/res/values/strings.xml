@@ -1,22 +1,27 @@
 <resources>
     <string name="app_name">TB</string>
-    <!--home-->
+    <!--Text-->
     <string name="text_match">Match</string>
     <string name="text_street">Street Basketball</string>
     <string name="text_bullfighting">1 vs 1</string>
-    <!--Match manager-->
     <string name="text_tec_total">Tec Total</string>
     <string name="text_match_manager">Match Manager</string>
     <string name="text_team_manager">Team Manager</string>
     <string name="text_player_manager">Player Manager</string>
     <string name="text_team_name">Team Name</string>
-    <string name="attention_team_name">Please Input Team Name</string>
-    <string name="action_submit">Submit</string>
-    <string name="attention_loading_data">Loading…</string>
-    <string name="attention_sending_data">Send…</string>
-    <string name="attention_tName_empty">Team is empty</string>
     <string name="text_into_manager_player">Go to Player Manager</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_choose_team">Choose Team</string>
+    <string name="text_player_name">Player Name</string>
+    <string name="text_team_position">Team Position</string>
+    <!--Action-->
+    <string name="action_submit">Submit</string>
+    <!--Attention-->
+    <string name="attention_team_name">Please Input Team Name</string>
+    <string name="attention_loading_data">Loading…</string>
+    <string name="attention_sending_data">Send…</string>
+    <string name="attention_tName_empty">Team is empty</string>
     <string name="attention_team_is_empty">Team is empty</string>
+    <string name="attention_please_input">Please Input</string>
+    <string name="text_team_number">Number</string>
 </resources>

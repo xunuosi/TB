@@ -6,6 +6,7 @@
     <!--home-->
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="color_LightBlack">#0d0c0c</color>
     <color name="colorGray">#a1a1a1</color>
     <color name="colorTitle">#009688</color>
     <color name="colorGreen">#2eecd9</color>
