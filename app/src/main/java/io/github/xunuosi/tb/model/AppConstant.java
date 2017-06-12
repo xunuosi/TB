@@ -9,5 +9,6 @@ public interface AppConstant {
 
     interface Team {
         String TEAM_ID = "team_id";
+        String TEAM_NAME = "team_name";
     }
 }

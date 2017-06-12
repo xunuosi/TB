@@ -15,5 +15,5 @@ import io.github.xunuosi.tb.model.bean.Player;
 public interface IPMDetailActivityView {
         void gotoActivity(Intent intent);
         void changeDialogState(boolean isShow, @Nullable Integer msgId);
-        void showView(List<Player> players);
+        void showView(String teamName);
 }

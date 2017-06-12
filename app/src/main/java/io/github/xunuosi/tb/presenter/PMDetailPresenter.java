@@ -26,6 +26,8 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
 
     private List<Player> players = new ArrayList<>();
     private Long teamId;
+    private String teamName;
+    private int position;
 
     @Inject
     public PMDetailPresenter(IPMDetailActivityView view, DaoSession daoSession) {
@@ -48,17 +50,20 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
     public void initData2Show(Intent intent) {
         view().changeDialogState(true, R.string.attention_loading_data);
         teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
-        if (teamId != -1) {
-            QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
-            queryBuilder.where(PlayerDao.Properties.TeamId.eq(teamId));
-            players = queryBuilder.list();
-            if (players != null && players.size() != 0) {
-                view().showView(players);
-            } else {
-                view().changeDialogState(false, null);
-            }
-        } else {
-            view().changeDialogState(false, null);
-        }
+        teamName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
+
+        view().showView(teamName);
+        view().changeDialogState(false, null);
+    }
+
+    /**
+     * 记录Spinner View选择信息
+     * @param position:Spinner View选择的下标值
+     */
+    public void saveItemSelected(int position) {
+        this.position = position;
+    }
+
+    public void savePlayer(String name, String tName, String num) {
     }
 }
