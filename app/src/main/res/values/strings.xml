@@ -24,4 +24,9 @@
     <string name="attention_team_is_empty">Team is empty</string>
     <string name="attention_please_input">Please Input</string>
     <string name="text_team_number">Number</string>
+    <string name="attention_name_is_empty">Name is empty</string>
+    <string name="attention_num_is_empty">Num is empty</string>
+    <string name="attention_role_is_empty">Role is empty</string>
+    <string name="attention_save_player_error">Save Error</string>
+    <string name="attention_save_success">Save Success</string>
 </resources>

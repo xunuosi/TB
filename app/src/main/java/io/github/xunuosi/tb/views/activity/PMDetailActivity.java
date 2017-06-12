@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,9 +22,9 @@ import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerPMDetailComponent;
 import io.github.xunuosi.tb.dagger.module.PMDetailModule;
-import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.presenter.PMDetailPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
+import io.github.xunuosi.tb.utils.ToastUtil;
 import io.github.xunuosi.tb.views.view.IPMDetailActivityView;
 
 /**
@@ -148,6 +148,34 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
     @Override
     public void showView(String teamName) {
         etPmdTName.setText(teamName);
+    }
+
+    @Override
+    public void showErrorToastMsg(int msgId) {
+        String msg = getString(msgId);
+        ToastUtil toastUtil = new ToastUtil(PMDetailActivity.this, R.layout.toast_center_error, msg);
+        toastUtil.show();
+    }
+
+    @Override
+    public void showToastMsg(int msgId) {
+        String msg = getString(msgId);
+        Toast.makeText(PMDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Clear Interface Value
+     */
+    @Override
+    public void clear() {
+        etPmdNum.setText("");
+        etPmdName.setText("");
+    }
+
+    @Override
+    public String getSpinnerValue(int position) {
+        String[] array = getResources().getStringArray(R.array.team_position);
+        return array[position];
     }
 
     @Override

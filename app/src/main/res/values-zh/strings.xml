@@ -25,4 +25,9 @@
     <string name="attention_team_is_empty">球队选择为空</string>
     <string name="attention_team_name">请输入队伍名称</string>
     <string name="attention_please_input">请输入</string>
+    <string name="attention_name_is_empty">球员名为空</string>
+    <string name="attention_num_is_empty">球员号码为空</string>
+    <string name="attention_role_is_empty">球员位置为空</string>
+    <string name="attention_save_player_error">保存球员失败</string>
+    <string name="attention_save_success">保存成功</string>
 </resources>
