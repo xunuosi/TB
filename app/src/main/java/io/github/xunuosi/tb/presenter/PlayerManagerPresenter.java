@@ -1,6 +1,7 @@
 package io.github.xunuosi.tb.presenter;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -60,12 +61,23 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
                 refreshData2Show();
                 break;
             case AppConstant.Action.LOAD_MORE:
-
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        loadMoreData2Show();
+                    }
+                }, 500);
                 break;
         }
     }
 
+    private void loadMoreData2Show() {
+        view().setRVLoadMoreState(false);
+
+    }
+
     private void refreshData2Show() {
+        view().setRVLoadMoreState(true);
         initData2Show(null);
         view().changeRVState(false);
     }

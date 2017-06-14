@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
@@ -104,6 +105,7 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
         mRvPlayerManager.setHasFixedSize(false);
         mRvPlayerManager.setAdapter(mAdapter);
+        mRvPlayerManager.setLoadMoreView(R.layout.custom_bottom_progressbar);
 
         paint.setStrokeWidth(5);
         paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
@@ -115,6 +117,14 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
             @Override
             public void onRefresh() {
                 presenter.showView(null, AppConstant.Action.REFRESH);
+            }
+        });
+
+        mRvPlayerManager.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                Toast.makeText(mContext, "loadMore", Toast.LENGTH_SHORT).show();
+                presenter.showView(null, AppConstant.Action.LOAD_MORE);
             }
         });
     }
@@ -170,6 +180,15 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     @Override
     public void changeRVState(boolean enable) {
         mRvPlayerManager.setRefreshing(enable);
+    }
+
+    @Override
+    public void setRVLoadMoreState(boolean enable) {
+        if (enable) {
+            mRvPlayerManager.reenableLoadmore();
+        } else {
+            mRvPlayerManager.disableLoadmore();
+        }
     }
 
     @Override

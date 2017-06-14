@@ -50,6 +50,10 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
         }
     }
 
+    public View getLoadMoreView() {
+        return customLoadMoreView;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;

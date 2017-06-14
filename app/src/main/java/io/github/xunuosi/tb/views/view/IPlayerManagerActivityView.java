@@ -22,4 +22,6 @@ public interface IPlayerManagerActivityView {
         void showView(List<Player> players);
 
         void changeRVState(boolean enable);
+
+        void setRVLoadMoreState(boolean enable);
 }
