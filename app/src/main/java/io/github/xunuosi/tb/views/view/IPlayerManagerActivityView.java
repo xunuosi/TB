@@ -14,7 +14,12 @@ import io.github.xunuosi.tb.model.bean.Team;
  */
 
 public interface IPlayerManagerActivityView {
+
         void gotoActivity(Intent intent);
+
         void changeDialogState(boolean isShow, @Nullable Integer msgId);
+
         void showView(List<Player> players);
+
+        void changeRVState(boolean enable);
 }

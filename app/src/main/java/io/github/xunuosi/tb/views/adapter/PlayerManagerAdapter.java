@@ -36,7 +36,18 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
     }
 
     public void setData(List<T> list) {
-        mList = list;
+        if (mList == null) {
+            mList = list;
+        } else {
+            mList.clear();
+            mList.addAll(list);
+        }
+    }
+
+    public void refresh() {
+        if (mList != null && mList.size() != 0) {
+            notifyDataSetChanged();
+        }
     }
 
     @Override

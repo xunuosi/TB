@@ -30,4 +30,5 @@
     <string name="attention_role_is_empty">球员位置为空</string>
     <string name="attention_save_player_error">保存球员失败,姓名或号码重复</string>
     <string name="attention_save_success">保存成功</string>
+    <string name="attention_loading_data_error" />
 </resources>

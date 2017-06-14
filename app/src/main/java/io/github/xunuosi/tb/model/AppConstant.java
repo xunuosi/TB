@@ -11,4 +11,10 @@ public interface AppConstant {
         String TEAM_ID = "team_id";
         String TEAM_NAME = "team_name";
     }
+
+    interface Action {
+        int INIT = 0;
+        int REFRESH = 1;
+        int LOAD_MORE = 2;
+    }
 }

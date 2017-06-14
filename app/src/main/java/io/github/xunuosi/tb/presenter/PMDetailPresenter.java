@@ -67,7 +67,6 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
     }
 
     public void savePlayer(String name, String tName, String num) {
-        view().changeDialogState(true, R.string.attention_sending_data);
         if (TextUtils.isEmpty(name)) {
             view().showErrorToastMsg(R.string.attention_name_is_empty);
             return;
@@ -78,6 +77,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
             view().showErrorToastMsg(R.string.attention_num_is_empty);
             return;
         }
+        view().changeDialogState(true, R.string.attention_sending_data);
         this.name = name;
         this.num = Integer.valueOf(num);
         this.role = view().getSpinnerValue(position);
@@ -91,7 +91,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
     private void savePlayer2DataBase() {
         QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
         queryBuilder.whereOr(PlayerDao.Properties.Name.eq(name),
-                PlayerDao.Properties.Name.eq(name));
+                PlayerDao.Properties.Num.eq(num));
         Player bean = queryBuilder.unique();
         if (bean == null) {
             bean = new Player();
@@ -101,6 +101,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
             bean.setSex(sex);
             bean.setPosition(role);
             bean.setCardNum(cardNum);
+            bean.setNum(num);
             model.getPlayerDao().insert(bean);
             view().showToastMsg(R.string.attention_save_success);
             view().clear();

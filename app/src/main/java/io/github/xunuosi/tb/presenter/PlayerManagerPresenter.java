@@ -1,6 +1,7 @@
 package io.github.xunuosi.tb.presenter;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -47,21 +48,58 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
 
     }
 
-    public void initData2Show(Intent intent) {
+    public void showView(@Nullable Intent intent, int action) {
+
+        switch (action) {
+            case AppConstant.Action.INIT:
+                if (intent != null) {
+                    initData2Show(intent);
+                }
+                break;
+            case AppConstant.Action.REFRESH:
+                refreshData2Show();
+                break;
+            case AppConstant.Action.LOAD_MORE:
+
+                break;
+        }
+    }
+
+    private void refreshData2Show() {
+        initData2Show(null);
+        view().changeRVState(false);
+    }
+
+    private void initData2Show(@Nullable Intent intent) {
         view().changeDialogState(true, R.string.attention_loading_data);
-        teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
-        tName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
+        players.clear();
+        if (intent != null) {
+            players.addAll(getData(intent));
+        } else {
+            players.addAll(getData(null));
+        }
+
+        if (players != null && players.size() != 0) {
+            view().showView(players);
+        } else {
+            view().changeDialogState(false, R.string.attention_loading_data_error);
+        }
+    }
+
+    private List<Player> getData(@Nullable Intent intent) {
+        if (intent != null) {
+            teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
+            tName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
+        }
+
         if (teamId != -1) {
             QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
             queryBuilder.where(PlayerDao.Properties.TeamId.eq(teamId));
-            players = queryBuilder.list();
-            if (players != null && players.size() != 0) {
-                view().showView(players);
-            } else {
-                view().changeDialogState(false, null);
-            }
+            List<Player> list;
+            list = queryBuilder.list();
+            return list;
         } else {
-            view().changeDialogState(false, null);
+            return null;
         }
     }
 }

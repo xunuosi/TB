@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +27,7 @@ import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerTeamManagerComponent;
 import io.github.xunuosi.tb.dagger.module.TeamManagerModule;
+import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
@@ -80,6 +83,31 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     @Override
     protected void initViews() {
         tvTitle.setText(R.string.text_team_manager);
+
+        mAdapter.setData(new ArrayList<Team>());
+        rvTm.setLayoutManager(new LinearLayoutManager(mContext));
+        rvTm.setHasFixedSize(false);
+        rvTm.setAdapter(mAdapter);
+        Paint paint = new Paint();
+        paint.setStrokeWidth(5);
+        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
+        paint.setAntiAlias(true);
+        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        rvTm.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+
+        rvTm.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.showView(AppConstant.Action.REFRESH);
+            }
+        });
+
+        rvTm.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                presenter.showView(AppConstant.Action.LOAD_MORE);
+            }
+        });
     }
 
     @Override
@@ -90,7 +118,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.initData2Show();
+        presenter.showView(AppConstant.Action.INIT);
     }
 
     @Override
@@ -105,19 +133,14 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
 
     @Override
     public void showView(List<Team> teams) {
-        rvTm.setLayoutManager(new LinearLayoutManager(mContext));
-        rvTm.setHasFixedSize(false);
         mAdapter.setData(teams);
-        rvTm.setAdapter(mAdapter);
-
+        mAdapter.refresh();
         changeDialogState(false, null);
+    }
 
-        Paint paint = new Paint();
-        paint.setStrokeWidth(5);
-        paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
-        paint.setAntiAlias(true);
-        paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
-        rvTm.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+    @Override
+    public void changeRVState(boolean enable) {
+        rvTm.setRefreshing(enable);
     }
 
     @Override
@@ -137,6 +160,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_back_arrow:
+                finish();
                 break;
             case R.id.im_add:
             case R.id.iv_footer_add_tm:

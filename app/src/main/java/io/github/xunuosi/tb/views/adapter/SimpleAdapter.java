@@ -34,8 +34,19 @@ public class SimpleAdapter<T> extends UltimateViewAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<T> data) {
-        mList = data;
+    public void setData(List<T> list) {
+        if (mList == null) {
+            mList = list;
+        } else {
+            mList.clear();
+            mList.addAll(list);
+        }
+    }
+
+    public void refresh() {
+        if (mList != null && mList.size() != 0) {
+            notifyDataSetChanged();
+        }
     }
 
     public void setListener(itemOnClickListener listener) {
