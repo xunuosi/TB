@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +37,8 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
     ImageView ivItemTmDetailAvator;
     @BindView(R.id.et_team_name)
     EditText etTeamName;
+    @BindView(R.id.tool_bar)
+    Toolbar mToolBar;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, TMDetailActivity.class);
@@ -59,6 +62,7 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
 
     @Override
     protected void initViews() {
+        setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_team_manager);
     }
 
@@ -78,7 +82,7 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
             case R.id.im_back_arrow:
                 break;
             case R.id.ib_add_avator:
-            break;
+                break;
             case R.id.im_add:
             case R.id.btn_tm_detail_submit:
                 presenter.addTeam(null, etTeamName.getText().toString().trim());

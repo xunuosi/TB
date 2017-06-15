@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_pmd"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,15 +21,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp" />
 
-    <include
-        layout="@layout/layout_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:id="@+id/tool_bar_pmd" />
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        android:background="@color/colorTitle">
+
+        <include layout="@layout/layout_toolbar"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <ImageView
         android:id="@+id/iv_item_pm_detail_avator"
@@ -41,7 +47,7 @@
         android:src="@drawable/ic_person_black_24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar_pmd" />
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
 
     <TextView
         android:id="@+id/tv_pmd_name"

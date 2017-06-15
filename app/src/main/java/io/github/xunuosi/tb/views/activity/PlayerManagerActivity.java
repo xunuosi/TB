@@ -48,8 +48,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     ImageView mImBackArrow;
     @BindView(R.id.im_add)
     ImageView mImAdd;
-    @BindView(R.id.tool_bar_pm)
-    Toolbar toolBar;
     @BindView(R.id.iv_footer_add)
     ImageButton ivFooterAdd;
     @BindView(R.id.rv_player_manager)
@@ -65,6 +63,8 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     DaoSession session;
     @Inject
     PlayerManagerPresenter presenter;
+    @BindView(R.id.tool_bar)
+    Toolbar mToolBar;
 
     private Intent intent;
 
@@ -99,6 +99,7 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 
     @Override
     protected void initViews() {
+        setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_player_manager);
 
         mAdapter.setData(new ArrayList<Player>());

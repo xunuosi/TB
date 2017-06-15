@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -58,6 +59,8 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     ImageButton ivFooterAddTm;
     @BindView(R.id.rv_tm)
     UltimateRecyclerView rvTm;
+    @BindView(R.id.tool_bar)
+    Toolbar mToolBar;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, TeamManagerActivity.class);
@@ -82,6 +85,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
 
     @Override
     protected void initViews() {
+        setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_team_manager);
 
         mAdapter.setData(new ArrayList<Team>());

@@ -4,16 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,6 +47,8 @@ public class ChooseTeamActivity extends BaseActivity implements IChooseTeamActiv
     AppCompatTextView mTvTitle;
     @BindView(R.id.spinner)
     AppCompatSpinner mSpinner;
+    @BindView(R.id.tool_bar)
+    Toolbar mToolBar;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, ChooseTeamActivity.class);
@@ -74,8 +74,9 @@ public class ChooseTeamActivity extends BaseActivity implements IChooseTeamActiv
     @Override
     protected void initViews() {
         changeDialogState(true, R.string.attention_loading_data);
+        setSupportActionBar(mToolBar);
         mTvTitle.setText(R.string.text_choose_team);
-        mImAdd.setVisibility(View.GONE);
+        mImAdd.setVisibility(View.INVISIBLE);
 
         new Handler().postDelayed(new Runnable() {
             @Override

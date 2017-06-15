@@ -8,11 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.TBApplication;
 import io.github.xunuosi.tb.dagger.component.ApplicationComponent;
 import io.github.xunuosi.tb.dagger.module.ActivityModule;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 
 import javax.inject.Inject;
 
@@ -55,6 +55,8 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
     Spinner spPmdPosition;
     @BindView(R.id.et_pmd_num)
     EditText etPmdNum;
+    @BindView(R.id.tool_bar)
+    Toolbar mToolBar;
 
 
     public static Intent getCallIntent(Context context) {
@@ -79,6 +81,7 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
 
     @Override
     protected void initViews() {
+        setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_player_manager);
         new Handler().postDelayed(new Runnable() {
             @Override
