@@ -16,6 +16,8 @@
     <string name="text_player_name">球员姓名</string>
     <string name="text_team_position">球队位置</string>
     <string name="text_team_number">球队号码</string>
+    <string name="text_edit">修改</string>
+    <string name="text_delete">删除</string>
     <!--Action-->
     <string name="action_submit">确认提交</string>
     <!--Attention-->
@@ -30,5 +32,5 @@
     <string name="attention_role_is_empty">球员位置为空</string>
     <string name="attention_save_player_error">保存球员失败,姓名或号码重复</string>
     <string name="attention_save_success">保存成功</string>
-    <string name="attention_loading_data_error" />
+    <string name="attention_loading_data_error">已无更多数据或加载数据失败</string>
 </resources>

@@ -3,12 +3,14 @@ package io.github.xunuosi.tb.views.adapter;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.ArrayList;
@@ -42,16 +44,13 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
             mList.clear();
             mList.addAll(list);
         }
+
     }
 
     public void refresh() {
         if (mList != null && mList.size() != 0) {
             notifyDataSetChanged();
         }
-    }
-
-    public View getLoadMoreView() {
-        return customLoadMoreView;
     }
 
     @Override
@@ -65,13 +64,13 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        T bean = mList.get(position);
-        if (bean instanceof Player) {
-            PlayerItem mHolder = (PlayerItem) holder;
-            mHolder.mTvItemPmName.setText(((Player) bean).getName());
-            mHolder.mTvItemPmNum.setText(String.valueOf(((Player) bean).getNum()));
-            mHolder.mTvItemPmPosition.setText(((Player) bean).getPosition());
+        if (position < getItemCount()
+                && (customHeaderView != null ? position <= mList.size() : position < mList.size())
+                && (customHeaderView != null ? position > 0 : true)) {
+            T bean = mList.get(customHeaderView != null ? position - 1 : position);
+            ((PlayerItem) holder).onBindView((Player) bean, true);
         }
+
     }
 
     /**
@@ -86,7 +85,8 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder newFooterHolder(View view) {
-        return null;
+        Log.e("xns", "newFooterHolder");
+        return new UltimateRecyclerviewViewHolder<>(view);
     }
 
     @Override
@@ -96,7 +96,6 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-
         return null;
     }
 
@@ -132,9 +131,17 @@ public class PlayerManagerAdapter<T> extends UltimateViewAdapter {
         @BindView(R.id.item_pm_root)
         ConstraintLayout mItemPmRoot;
 
-        PlayerItem(View view) {
+        public PlayerItem(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        void onBindView(Player bean, boolean isItem) {
+            if (isItem) {
+                mTvItemPmName.setText(bean.getName());
+                mTvItemPmNum.setText(String.valueOf(bean.getNum()));
+                mTvItemPmPosition.setText(bean.getPosition());
+            }
         }
     }
 }

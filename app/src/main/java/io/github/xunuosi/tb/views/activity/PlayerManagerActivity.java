@@ -14,10 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.layoutmanagers.ScrollSmoothLineaerLayoutManager;
+import com.marshalchen.ultimaterecyclerview.swipe.SwipeItemManagerInterface;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.marshalchen.ultimaterecyclerview.ui.emptyview.emptyViewOnShownListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.presenter.PlayerManagerPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.adapter.PlayerManagerAdapter;
+import io.github.xunuosi.tb.views.adapter.PMSwipeAdapter;
 import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
 /**
@@ -42,7 +46,7 @@ import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
  *
  */
 
-public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView {
+public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView, emptyViewOnShownListener {
 
     @BindView(R.id.im_back_arrow)
     ImageView mImBackArrow;
@@ -67,8 +71,10 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     Toolbar mToolBar;
 
     private Intent intent;
-
     private Paint paint = new Paint();
+    private boolean isLoading = false;
+    private ScrollSmoothLineaerLayoutManager mLayoutManager;
+    private PMSwipeAdapter<Player> mPMSwipeAdapter;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, PlayerManagerActivity.class);
@@ -102,17 +108,29 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_player_manager);
 
-        mAdapter.setData(new ArrayList<Player>());
-        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(mContext));
+        mPMSwipeAdapter = new PMSwipeAdapter<>(new ArrayList<Player>());
+
         mRvPlayerManager.setHasFixedSize(false);
-        mRvPlayerManager.setAdapter(mAdapter);
-        mRvPlayerManager.setLoadMoreView(R.layout.custom_bottom_progressbar);
+        mPMSwipeAdapter.setMode(SwipeItemManagerInterface.Mode.Single);
+        mLayoutManager = new ScrollSmoothLineaerLayoutManager(this, LinearLayoutManager.VERTICAL, false, 500);
+
+        mRvPlayerManager.setLayoutManager(mLayoutManager);
+        enableEmptyViewPolicy();
+
+//        mRvPlayerManager.setLoadMoreView(LayoutInflater.from(this)
+//                .inflate(R.layout.custom_bottom_progressbar, null));
+//        mAdapter.enableLoadMore(true);
+
+        mRvPlayerManager.reenableLoadmore();
+
+        mRvPlayerManager.setAdapter(mPMSwipeAdapter);
 
         paint.setStrokeWidth(5);
         paint.setColor(ContextCompat.getColor(mContext, R.color.colorGray));
         paint.setAntiAlias(true);
         paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         mRvPlayerManager.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
+
 
         mRvPlayerManager.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -124,11 +142,19 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         mRvPlayerManager.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                Toast.makeText(mContext, "loadMore", Toast.LENGTH_SHORT).show();
-                presenter.showView(null, AppConstant.Action.LOAD_MORE);
+                if (!isLoading) {
+                    presenter.showView(null, AppConstant.Action.LOAD_MORE);
+                }
             }
         });
+
+
     }
+
+    protected void enableEmptyViewPolicy() {
+        mRvPlayerManager.setEmptyView(R.layout.empty_view_v2, UltimateRecyclerView.EMPTY_CLEAR_ALL, this);
+    }
+
 
     @Override
     protected void initData() {
@@ -173,8 +199,8 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 
     @Override
     public void showView(List<Player> players) {
-        mAdapter.setData(players);
-        mAdapter.refresh();
+        mPMSwipeAdapter.setData(players);
+        mPMSwipeAdapter.refresh();
         changeDialogState(false, null);
     }
 
@@ -193,8 +219,29 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     }
 
     @Override
+    public void showEmptyView(boolean enable) {
+        if (enable) {
+            mRvPlayerManager.showEmptyView();
+        } else {
+            mRvPlayerManager.hideEmptyView();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.unbindView();
         super.onDestroy();
     }
+
+    @Override
+    public void onEmptyViewShow(View mView) {
+        TextView tv = (TextView) mView.findViewById(R.id.exp_section_title);
+        if (tv != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("There is no data.");
+            tv.setText(sb.toString());
+        }
+    }
+
+
 }

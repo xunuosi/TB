@@ -30,4 +30,6 @@
     <string name="attention_save_player_error">Save Error</string>
     <string name="attention_save_success">Save Success</string>
     <string name="attention_loading_data_error">Load Data Error</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_delete">Delete</string>
 </resources>

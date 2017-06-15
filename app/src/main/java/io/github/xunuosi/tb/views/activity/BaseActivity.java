@@ -8,7 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.layoutmanagers.ScrollSmoothLineaerLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,4 +102,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @LayoutRes
     public abstract int setLayoutId();
+
+    protected void enableEmptyViewPolicy(UltimateRecyclerView rv) {
+        rv.setEmptyView(R.layout.empty_view, UltimateRecyclerView.EMPTY_SHOW_LOADMORE_ONLY);
+    }
 }

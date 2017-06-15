@@ -24,4 +24,6 @@ public interface IPlayerManagerActivityView {
         void changeRVState(boolean enable);
 
         void setRVLoadMoreState(boolean enable);
+
+        void showEmptyView(boolean enable);
 }

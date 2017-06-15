@@ -3,6 +3,7 @@ package io.github.xunuosi.tb.presenter;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -28,6 +29,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
     private List<Player> players = new ArrayList<>();
     private Long teamId;
     private String tName;
+    private final int QUERY_LIMIT = 10;
 
     @Inject
     public PlayerManagerPresenter(IPlayerManagerActivityView view, DaoSession daoSession) {
@@ -61,19 +63,26 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
                 refreshData2Show();
                 break;
             case AppConstant.Action.LOAD_MORE:
+                view().changeDialogState(true, R.string.attention_loading_data);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         loadMoreData2Show();
                     }
-                }, 500);
+                }, 1000);
                 break;
         }
     }
 
     private void loadMoreData2Show() {
-        view().setRVLoadMoreState(false);
-
+        List<Player> mList = getData(null);
+        if (mList == null || mList.size() == 0) {
+            view().setRVLoadMoreState(false);
+        } else {
+            players.addAll(mList);
+            view().showView(players);
+        }
+        view().changeDialogState(false, null);
     }
 
     private void refreshData2Show() {
@@ -92,8 +101,10 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
         }
 
         if (players != null && players.size() != 0) {
+            view().showEmptyView(false);
             view().showView(players);
         } else {
+            view().showEmptyView(true);
             view().changeDialogState(false, R.string.attention_loading_data_error);
         }
     }
@@ -108,7 +119,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
             QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
             queryBuilder.where(PlayerDao.Properties.TeamId.eq(teamId));
             List<Player> list;
-            list = queryBuilder.list();
+            list = queryBuilder.limit(QUERY_LIMIT).offset(players.size()).list();
             return list;
         } else {
             return null;

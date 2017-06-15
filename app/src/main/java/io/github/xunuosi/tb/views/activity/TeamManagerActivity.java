@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.layoutmanagers.ScrollSmoothLineaerLayoutManager;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
         tvTitle.setText(R.string.text_team_manager);
 
         mAdapter.setData(new ArrayList<Team>());
-        rvTm.setLayoutManager(new LinearLayoutManager(mContext));
+        rvTm.setLayoutManager(new LinearLayoutManager(this));
         rvTm.setHasFixedSize(false);
         rvTm.setAdapter(mAdapter);
         Paint paint = new Paint();

@@ -114,5 +114,19 @@ public class Player {
     public void setAvator_url(String avator_url) {
         this.avator_url = avator_url;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", avator_url='" + avator_url + '\'' +
+                ", sex='" + sex + '\'' +
+                ", name='" + name + '\'' +
+                ", num=" + num +
+                ", teamId=" + teamId +
+                ", teamName='" + teamName + '\'' +
+                ", cardNum='" + cardNum + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
 }
