@@ -45,6 +45,7 @@ public class Player implements Parcelable {
 
 
     protected Player(Parcel in) {
+        id = in.readLong();
         avator_url = in.readString();
         sex = in.readString();
         name = in.readString();
@@ -163,6 +164,7 @@ public class Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(avator_url);
         dest.writeString(sex);
         dest.writeString(name);

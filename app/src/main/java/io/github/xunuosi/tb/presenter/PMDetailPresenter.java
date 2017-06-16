@@ -21,7 +21,10 @@ import io.github.xunuosi.tb.views.view.IPMDetailActivityView;
  */
 
 public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoSession> {
-
+    private final int ACTION_TYPE_SAVE = 0;
+    private final int ACTION_TYPE_EDIT= 1;
+    // 记录当前操作是修改还是保存
+    private int actionType;
     private Long teamId;
     private String teamName;
     private int position;
@@ -30,6 +33,8 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
     private String role;
     private String sex = "男";
     private String cardNum;
+    private Player bean;
+
 
     @Inject
     public PMDetailPresenter(IPMDetailActivityView view, DaoSession daoSession) {
@@ -51,10 +56,19 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
 
     public void initData2Show(Intent intent) {
         view().changeDialogState(true, R.string.attention_loading_data);
-        teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
-        teamName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
+        bean = intent.getParcelableExtra(AppConstant.Player.BEAN);
+        if (bean != null) {
+            actionType = ACTION_TYPE_EDIT;
+            teamId = bean.getId();
+            teamName = bean.getTeamName();
+            view().showView(teamName, bean.getName(), bean.getPosition(), String.valueOf(bean.getNum()));
+        } else {
+            actionType = ACTION_TYPE_SAVE;
+            teamId = intent.getLongExtra(AppConstant.Team.TEAM_ID, -1);
+            teamName = intent.getStringExtra(AppConstant.Team.TEAM_NAME);
+            view().showView(teamName);
+        }
 
-        view().showView(teamName);
         view().changeDialogState(false, null);
     }
 
@@ -66,7 +80,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
         this.position = position;
     }
 
-    public void savePlayer(String name, String tName, String num) {
+    public void saveOrEditPlayer(String name, String tName, String num) {
         if (TextUtils.isEmpty(name)) {
             view().showErrorToastMsg(R.string.attention_name_is_empty);
             return;
@@ -82,27 +96,72 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
         this.num = Integer.valueOf(num);
         this.role = view().getSpinnerValue(position);
         this.cardNum = teamId + "-" + name.hashCode() + "-" + num;
-        savePlayer2DataBase();
+        checkoutAction();
+    }
+
+    /**
+     * 判断当前操作是新增保存还是进行修改后的保存
+     */
+    private void checkoutAction() {
+        switch (actionType) {
+            case ACTION_TYPE_SAVE:
+                savePlayer2DataBase();
+                break;
+            case ACTION_TYPE_EDIT:
+                editPlayer2DataBase();
+                break;
+        }
+    }
+
+    /**
+     * 判断数据库中是否存在该球员信息
+     * @return true:exist false:Is not exist
+     */
+    private boolean checkoutDataIsExist() {
+        try {
+            QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
+            queryBuilder.whereOr(PlayerDao.Properties.Name.eq(name),
+                    PlayerDao.Properties.Num.eq(num));
+            queryBuilder.uniqueOrThrow();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void editPlayer2DataBase() {
+        if (checkoutDataIsExist()) {
+//            bean.setId(id);
+            bean.setName(name);
+            bean.setNum(num);
+            bean.setPosition(role);
+            model.getPlayerDao().update(bean);
+            view().showToastMsg(R.string.attention_save_success);
+        } else {
+            view().showErrorToastMsg(R.string.attention_fail);
+        }
+        view().changeDialogState(false, null);
     }
 
     /**
      * Check data to save DataBase
      */
     private void savePlayer2DataBase() {
-        QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
-        queryBuilder.whereOr(PlayerDao.Properties.Name.eq(name),
-                PlayerDao.Properties.Num.eq(num));
-        Player bean = queryBuilder.unique();
-        if (bean == null) {
-            bean = new Player();
-            bean.setName(name);
-            bean.setTeamName(teamName);
-            bean.setTeamId(teamId.intValue());
-            bean.setSex(sex);
-            bean.setPosition(role);
-            bean.setCardNum(cardNum);
-            bean.setNum(num);
-            model.getPlayerDao().insert(bean);
+        long rowNum = -1;
+        if (checkoutDataIsExist()) {
+            view().showErrorToastMsg(R.string.attention_save_player_error);
+        } else {
+            Player player = new Player();
+            player.setName(name);
+            player.setTeamName(teamName);
+            player.setTeamId(teamId.intValue());
+            player.setSex(sex);
+            player.setPosition(role);
+            player.setCardNum(cardNum);
+            player.setNum(num);
+            rowNum = model.getPlayerDao().insert(player);
+        }
+        if (rowNum != -1) {
             view().showToastMsg(R.string.attention_save_success);
             view().clear();
         } else {

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 /**
  * Created by admin on 2017/6/3.
+ *
  */
 
 public interface IPMDetailActivityView {
@@ -12,7 +13,7 @@ public interface IPMDetailActivityView {
 
     void changeDialogState(boolean isShow, @Nullable Integer msgId);
 
-    void showView(String teamName);
+    void showView(String... data);
 
     void showErrorToastMsg(int msgId);
 

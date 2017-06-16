@@ -17,6 +17,7 @@ import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.data.db.PlayerDao;
 import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Player;
+import io.github.xunuosi.tb.views.activity.PMDetailActivity;
 import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
 /**
@@ -151,5 +152,12 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
         }
         view().showToast(R.string.attention_fail);
         return false;
+    }
+
+    public void editObject(Player bean, Intent intent) {
+        if (bean != null) {
+            intent.putExtra(AppConstant.Player.BEAN, bean);
+            view().gotoActivity(intent);
+        }
     }
 }

@@ -83,15 +83,9 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
     protected void initViews() {
         setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_player_manager);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Init Spinner
-                spPmdPosition.setAdapter(mAdapter);
-                spPmdPosition.setOnItemSelectedListener(PMDetailActivity.this);
-                changeDialogState(false, null);
-            }
-        }, 1000);
+        // Init Spinner
+        spPmdPosition.setAdapter(mAdapter);
+        spPmdPosition.setOnItemSelectedListener(PMDetailActivity.this);
     }
 
     @Override
@@ -121,7 +115,7 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
                 break;
             case R.id.btn_pmd_submit:
             case R.id.im_add:
-                presenter.savePlayer(etPmdName.getText().toString().trim(),
+                presenter.saveOrEditPlayer(etPmdName.getText().toString().trim(),
                         etPmdTName.getText().toString().trim(),
                         etPmdNum.getText().toString().trim());
                 break;
@@ -149,8 +143,17 @@ public class PMDetailActivity extends BaseActivity implements IPMDetailActivityV
     }
 
     @Override
-    public void showView(String teamName) {
-        etPmdTName.setText(teamName);
+    public void showView(String... data) {
+        if (data.length == 1) {
+            etPmdTName.setText(data[0]);
+        } else {
+            etPmdTName.setText(data[0]);
+            etPmdName.setText(data[1]);
+            int position = mAdapter.getPosition(data[2]);
+            spPmdPosition.setSelection(position, true);
+            etPmdNum.setText(data[3]);
+        }
+
     }
 
     @Override

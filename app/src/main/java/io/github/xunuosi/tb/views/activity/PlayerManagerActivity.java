@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerPlayerManagerComponent;
+import io.github.xunuosi.tb.dagger.component.PMDetailComponent;
 import io.github.xunuosi.tb.dagger.module.PlayerManagerModule;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.AppConstant;
@@ -250,8 +251,7 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 
     @Override
     public void onEditClick(Object bean) {
-        Log.e("xns", "bean:" + bean);
-
+        presenter.editObject((Player) bean, PMDetailActivity.getCallIntent(mContext));
     }
 
     @Override
