@@ -69,7 +69,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
                     public void run() {
                         loadMoreData2Show();
                     }
-                }, 1000);
+                }, 500);
                 break;
         }
     }
@@ -124,5 +124,32 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
         } else {
             return null;
         }
+    }
+
+    public boolean deleteObject(Player bean) {
+        view().changeDialogState(true,R.string.attention_delete_data);
+        if (bean != null) {
+            model.getPlayerDao().deleteByKey(bean.getId());
+            return checkoutActionResult(bean.getCardNum());
+        } else {
+            view().showToast(R.string.attention_fail);
+        }
+        return false;
+    }
+
+    /**
+     * 检测数据库操作是否成功
+     */
+    private boolean checkoutActionResult(String key) {
+        QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
+        queryBuilder.where(PlayerDao.Properties.CardNum.eq(key));
+        try {
+            queryBuilder.uniqueOrThrow();
+        } catch (Exception e) {
+            view().showToast(R.string.attention_success);
+            return true;
+        }
+        view().showToast(R.string.attention_fail);
+        return false;
     }
 }

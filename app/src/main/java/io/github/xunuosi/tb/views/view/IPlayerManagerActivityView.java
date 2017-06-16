@@ -27,4 +27,5 @@ public interface IPlayerManagerActivityView {
 
         void showView(List<Player> players);
 
+        void showToast(int msgId);
 }

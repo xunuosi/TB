@@ -1,6 +1,9 @@
 package io.github.xunuosi.tb.model.bean;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
@@ -10,7 +13,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * 球员的实体类
  */
 @Entity(nameInDb = "tb_player")
-public class Player {
+public class Player implements Parcelable {
     @Id(autoincrement = true)
     private Long id;
     private String avator_url;
@@ -40,6 +43,29 @@ public class Player {
         this.position = position;
     }
 
+
+    protected Player(Parcel in) {
+        avator_url = in.readString();
+        sex = in.readString();
+        name = in.readString();
+        num = in.readInt();
+        teamId = in.readInt();
+        teamName = in.readString();
+        cardNum = in.readString();
+        position = in.readString();
+    }
+
+    public static final Creator<Player> CREATOR = new Creator<Player>() {
+        @Override
+        public Player createFromParcel(Parcel in) {
+            return new Player(in);
+        }
+
+        @Override
+        public Player[] newArray(int size) {
+            return new Player[size];
+        }
+    };
 
     public Long getId() {
         return this.id;
@@ -128,5 +154,22 @@ public class Player {
                 ", cardNum='" + cardNum + '\'' +
                 ", position='" + position + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(avator_url);
+        dest.writeString(sex);
+        dest.writeString(name);
+        dest.writeInt(num);
+        dest.writeInt(teamId);
+        dest.writeString(teamName);
+        dest.writeString(cardNum);
+        dest.writeString(position);
     }
 }

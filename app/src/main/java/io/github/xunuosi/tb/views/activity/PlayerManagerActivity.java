@@ -11,10 +11,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.layoutmanagers.ScrollSmoothLineaerLayoutManager;
@@ -37,7 +39,7 @@ import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Player;
 import io.github.xunuosi.tb.presenter.PlayerManagerPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
-import io.github.xunuosi.tb.views.adapter.PlayerManagerAdapter;
+import io.github.xunuosi.tb.utils.ToastUtil;
 import io.github.xunuosi.tb.views.adapter.PMSwipeAdapter;
 import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
 
@@ -46,7 +48,8 @@ import io.github.xunuosi.tb.views.view.IPlayerManagerActivityView;
  *
  */
 
-public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView, emptyViewOnShownListener {
+public class PlayerManagerActivity extends BaseActivity implements IPlayerManagerActivityView,
+        emptyViewOnShownListener, PMSwipeAdapter.SwipeBtnListener {
 
     @BindView(R.id.im_back_arrow)
     ImageView mImBackArrow;
@@ -109,9 +112,9 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         mRvPlayerManager.setHasFixedSize(false);
         mPMSwipeAdapter = new PMSwipeAdapter<>(new ArrayList<Player>());
         mPMSwipeAdapter.setMode(SwipeItemManagerInterface.Mode.Single);
+        mPMSwipeAdapter.setSwipBtnListener(this);
         mLayoutManager = new ScrollSmoothLineaerLayoutManager(this, LinearLayoutManager.VERTICAL, false, 500);
 
-//        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(this));
         mRvPlayerManager.setLayoutManager(mLayoutManager);
         enableEmptyViewPolicy();
 
@@ -143,9 +146,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
                 }
             }
         });
-
-
-
 
 
     }
@@ -226,6 +226,12 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     }
 
     @Override
+    public void showToast(int msgId) {
+        String msg = getString(msgId);
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.unbindView();
         super.onDestroy();
@@ -242,4 +248,17 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     }
 
 
+    @Override
+    public void onEditClick(Object bean) {
+        Log.e("xns", "bean:" + bean);
+
+    }
+
+    @Override
+    public void onDeleteClick(Object bean, int position) {
+        if (presenter.deleteObject((Player) bean)) {
+            mPMSwipeAdapter.removeAt(position);
+        }
+        changeDialogState(false, null);
+    }
 }

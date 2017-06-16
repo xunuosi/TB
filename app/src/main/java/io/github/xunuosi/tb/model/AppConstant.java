@@ -8,8 +8,13 @@ package io.github.xunuosi.tb.model;
 public interface AppConstant {
 
     interface Team {
+        String BEAN = "team_bean";
         String TEAM_ID = "team_id";
         String TEAM_NAME = "team_name";
+    }
+
+    interface Player {
+        String BEAN = "player_bean";
     }
 
     interface Action {

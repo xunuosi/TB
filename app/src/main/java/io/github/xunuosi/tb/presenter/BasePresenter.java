@@ -48,4 +48,5 @@ public abstract class BasePresenter<V,M> {
     protected boolean setupDone() {
         return view() != null && model != null;
     }
+
 }

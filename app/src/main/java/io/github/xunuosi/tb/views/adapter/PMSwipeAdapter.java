@@ -1,7 +1,7 @@
 package io.github.xunuosi.tb.views.adapter;
 
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,11 +14,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.model.bean.Player;
 
 public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
+    private SwipeBtnListener mListener;
 
     public PMSwipeAdapter(List<T> mData) {
         super(mData);
@@ -64,10 +64,24 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
     }
 
     @Override
-    protected void withBindHolder(UltimateRecyclerviewViewHolder holder, T data, int position) {
+    protected void withBindHolder(UltimateRecyclerviewViewHolder holder, final T data, final int position) {
         super.withBindHolder(holder, data, position);
         if (data instanceof Player) {
             ((SVHolder) holder).bindView((Player) data);
+
+            ((SVHolder) holder).mBtnPmSwipEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onEditClick(data);
+                }
+            });
+
+            ((SVHolder) holder).mBtnPmSwipDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onDeleteClick(data, position);
+                }
+            });
         }
     }
 
@@ -97,8 +111,14 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
         closeItem(pos);
     }
 
-    public void insertNewList(List<T> players) {
-        super.insert(players);
+    public interface SwipeBtnListener {
+        void onEditClick(Object bean);
+
+        void onDeleteClick(Object bean, int position);
+    }
+
+    public void setSwipBtnListener(SwipeBtnListener listener) {
+        mListener = listener;
     }
 
 
@@ -118,6 +138,10 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
         SwipeLayout swipeLayout;
         @BindView(R.id.swipe_child_pm)
         LinearLayout mSwipeChildPm;
+        @BindView(R.id.btn_pm_swip_edit)
+        Button mBtnPmSwipEdit;
+        @BindView(R.id.btn_pm_swip_delete)
+        Button mBtnPmSwipDelete;
 
         public SVHolder(View view, boolean bind) {
             super(view);
@@ -132,18 +156,6 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
             mTvItemSwipPmName.setText(bean.getName());
             mTvItemSwipPmNum.setText(String.valueOf(bean.getNum()));
             mTvItemSwipPmPosition.setText(bean.getPosition());
-        }
-
-        @OnClick({R.id.btn_pm_swip_edit, R.id.btn_pm_swip_delete})
-        public void onViewClicked(View view) {
-            switch (view.getId()) {
-                case R.id.btn_pm_swip_edit:
-                    Log.e("xns", "edit");
-                    break;
-                case R.id.btn_pm_swip_delete:
-                    Log.e("xns", "delete");
-                    break;
-            }
         }
     }
 }

@@ -14,6 +14,8 @@
     <string name="text_choose_team">Choose Team</string>
     <string name="text_player_name">Player Name</string>
     <string name="text_team_position">Team Position</string>
+    <string name="text_edit">Edit</string>
+    <string name="text_delete">Delete</string>
     <!--Action-->
     <string name="action_submit">Submit</string>
     <!--Attention-->
@@ -30,6 +32,7 @@
     <string name="attention_save_player_error">Save Error</string>
     <string name="attention_save_success">Save Success</string>
     <string name="attention_loading_data_error">Load Data Error</string>
-    <string name="text_edit">Edit</string>
-    <string name="text_delete">Delete</string>
+    <string name="attention_delete_data">Is being deleted</string>
+    <string name="attention_fail">Action Fail</string>
+    <string name="attention_success">Action Success</string>
 </resources>
