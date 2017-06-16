@@ -25,7 +25,6 @@ public interface IPlayerManagerActivityView {
 
         void showEmptyView(boolean enable);
 
-        void showRefreshView(List<Player> players);
+        void showView(List<Player> players);
 
-        void showLoadMoreView(List<Player> players);
 }

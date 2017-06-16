@@ -19,22 +19,19 @@ import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.model.bean.Player;
 
 public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
-    private List<T> mList;
 
     public PMSwipeAdapter(List<T> mData) {
         super(mData);
-        mList = mData;
-        source = mList;
     }
 
     public void setData(List<T> list) {
-        if (mList == null) {
-            mList = list;
+        if (source == null) {
+            source = list;
         } else {
-            mList.clear();
-            mList.addAll(list);
+            source.clear();
+            source.addAll(list);
         }
-        notifyDataSetChanged();
+        refresh();
     }
 
     public void refresh() {
@@ -119,29 +116,32 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
         LinearLayout mItemPmSwipRoot;
         @BindView(R.id.recyclerview_swipe)
         SwipeLayout swipeLayout;
+        @BindView(R.id.swipe_child_pm)
+        LinearLayout mSwipeChildPm;
 
         public SVHolder(View view, boolean bind) {
             super(view);
             ButterKnife.bind(this, view);
             if (bind) {
-                swipeLayout.setDragEdge(SwipeLayout.DragEdge.Right);
-//                swipeLayout.setDrag(SwipeLayout.DragEdge.Right, mItemPmRoot);
+                swipeLayout.setDrag(SwipeLayout.DragEdge.Right, mSwipeChildPm);
                 swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
             }
         }
 
         public void bindView(Player bean) {
             mTvItemSwipPmName.setText(bean.getName());
-//            mTvItemSwipPmNum.setText(bean.getNum());
-//            mTvItemSwipPmPosition.setText(bean.getPosition());
+            mTvItemSwipPmNum.setText(String.valueOf(bean.getNum()));
+            mTvItemSwipPmPosition.setText(bean.getPosition());
         }
 
         @OnClick({R.id.btn_pm_swip_edit, R.id.btn_pm_swip_delete})
         public void onViewClicked(View view) {
             switch (view.getId()) {
                 case R.id.btn_pm_swip_edit:
+                    Log.e("xns", "edit");
                     break;
                 case R.id.btn_pm_swip_delete:
+                    Log.e("xns", "delete");
                     break;
             }
         }

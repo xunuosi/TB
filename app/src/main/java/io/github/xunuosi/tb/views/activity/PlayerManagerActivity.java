@@ -111,7 +111,8 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         mPMSwipeAdapter.setMode(SwipeItemManagerInterface.Mode.Single);
         mLayoutManager = new ScrollSmoothLineaerLayoutManager(this, LinearLayoutManager.VERTICAL, false, 500);
 
-        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(this));
+//        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(this));
+        mRvPlayerManager.setLayoutManager(mLayoutManager);
         enableEmptyViewPolicy();
 
 //        mRvPlayerManager.setLoadMoreView(LayoutInflater.from(this)
@@ -219,14 +220,8 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     }
 
     @Override
-    public void showRefreshView(List<Player> players) {
+    public void showView(List<Player> players) {
         mPMSwipeAdapter.setData(players);
-        changeDialogState(false, null);
-    }
-
-    @Override
-    public void showLoadMoreView(List<Player> players) {
-        mPMSwipeAdapter.insertNewList(players);
         changeDialogState(false, null);
     }
 
