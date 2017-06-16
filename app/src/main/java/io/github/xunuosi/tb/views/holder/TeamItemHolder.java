@@ -23,7 +23,7 @@ public class TeamItemHolder<T> extends UltimateRecyclerviewViewHolder {
     @BindView(R.id.tv_item_tm_name)
     TextView tvItemTmName;
     @BindView(R.id.item_tm_root)
-    ConstraintLayout itemTmRoot;
+    public ConstraintLayout itemTmRoot;
 
     private T data;
 
@@ -42,5 +42,7 @@ public class TeamItemHolder<T> extends UltimateRecyclerviewViewHolder {
     private void showTeamView() {
         tvItemTmName.setText(((Team) data).getName());
     }
+
+
 
 }

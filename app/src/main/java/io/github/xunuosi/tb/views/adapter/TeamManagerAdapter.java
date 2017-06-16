@@ -47,9 +47,23 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         T bean = mList.get(position);
         if (bean instanceof Team) {
-            TeamItemHolder mHolder = (TeamItemHolder) holder;
+            final TeamItemHolder mHolder = (TeamItemHolder) holder;
             mHolder.bindData(bean);
+            mHolder.itemTmRoot.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
         }
+    }
+
+    public interface PopWindowListener {
+        
+        void showPopWindow();
+
+        void hidePopWindow();
     }
 
     /**
