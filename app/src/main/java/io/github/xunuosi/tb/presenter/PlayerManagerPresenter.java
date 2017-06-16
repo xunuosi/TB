@@ -80,7 +80,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
             view().setRVLoadMoreState(false);
         } else {
             players.addAll(mList);
-            view().showView(players);
+            view().showLoadMoreView(players);
         }
         view().changeDialogState(false, null);
     }
@@ -102,7 +102,7 @@ public class PlayerManagerPresenter extends BasePresenter<IPlayerManagerActivity
 
         if (players != null && players.size() != 0) {
             view().showEmptyView(false);
-            view().showView(players);
+            view().showRefreshView(players);
         } else {
             view().showEmptyView(true);
             view().changeDialogState(false, R.string.attention_loading_data_error);

@@ -1,27 +1,30 @@
 package io.github.xunuosi.tb.views.adapter;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.SwipeableUltimateViewAdapter;
-import com.marshalchen.ultimaterecyclerview.URLogs;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.swipe.SwipeLayout;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.model.bean.Player;
 
 public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
-
     private List<T> mList;
 
     public PMSwipeAdapter(List<T> mData) {
         super(mData);
+        mList = mData;
+        source = mList;
     }
 
     public void setData(List<T> list) {
@@ -31,23 +34,15 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
             mList.clear();
             mList.addAll(list);
         }
-
+        notifyDataSetChanged();
     }
 
     public void refresh() {
-        if (mList != null && mList.size() != 0) {
+        if (source != null && source.size() != 0) {
             notifyDataSetChanged();
         }
     }
 
-
-    @Override
-    protected void withBindHolder(UltimateRecyclerviewViewHolder holder, T data, int position) {
-        super.withBindHolder(holder, data, position);
-        if (data instanceof Player) {
-            ((SVHolder) holder).mTvItemPmName.setText(((Player) data).getName());
-        }
-    }
 
     /**
      * the layout id for the normal data
@@ -67,29 +62,16 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
      */
     @Override
     protected UltimateRecyclerviewViewHolder newViewHolder(final View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                URLogs.d("click");
-            }
-        });
         final SVHolder viewHolder = new SVHolder(view, true);
-        viewHolder.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(view.getContext(), "DoubleClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeAt(viewHolder.getPosition());
-                Toast.makeText(view.getContext(), "Deleted " + viewHolder.getPosition(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return viewHolder;
+    }
+
+    @Override
+    protected void withBindHolder(UltimateRecyclerviewViewHolder holder, T data, int position) {
+        super.withBindHolder(holder, data, position);
+        if (data instanceof Player) {
+            ((SVHolder) holder).bindView((Player) data);
+        }
     }
 
     @Override
@@ -118,34 +100,50 @@ public class PMSwipeAdapter<T> extends SwipeableUltimateViewAdapter<T> {
         closeItem(pos);
     }
 
+    public void insertNewList(List<T> players) {
+        super.insert(players);
+    }
+
 
     public static class SVHolder extends UltimateRecyclerviewViewHolder {
         public static final int layout = R.layout.item_swipeable_pm;
+        @BindView(R.id.iv_item_swip_pm_avator)
+        ImageView mIvItemSwipPmAvator;
+        @BindView(R.id.tv_item_swip_pm_name)
+        TextView mTvItemSwipPmName;
+        @BindView(R.id.tv_item_swip_pm_num)
+        TextView mTvItemSwipPmNum;
+        @BindView(R.id.tv_item_swip_pm_position)
+        TextView mTvItemSwipPmPosition;
+        @BindView(R.id.item_pm_swip_root)
+        LinearLayout mItemPmSwipRoot;
+        @BindView(R.id.recyclerview_swipe)
+        SwipeLayout swipeLayout;
 
-        ImageView mIvItemPmAvator;
-
-        TextView mTvItemPmName;
-
-        TextView mTvItemPmNum;
-
-        TextView mTvItemPmPosition;
-
-        ImageView mTrash;
-
-        Button mDelete;
-
-        SwipeLayout mRecyclerviewSwipe;
-
-        public SVHolder(View itemView, boolean bind) {
-            super(itemView);
-            mRecyclerviewSwipe = (SwipeLayout) itemView.findViewById(R.id.recyclerview_swipe);
-            mDelete = (Button) itemView.findViewById(R.id.delete);
-            mTvItemPmName = (TextView) itemView.findViewById(R.id.tv_item_pm_name);
+        public SVHolder(View view, boolean bind) {
+            super(view);
+            ButterKnife.bind(this, view);
             if (bind) {
-                mRecyclerviewSwipe.setDragEdge(SwipeLayout.DragEdge.Right);
-                mRecyclerviewSwipe.setShowMode(SwipeLayout.ShowMode.PullOut);
+                swipeLayout.setDragEdge(SwipeLayout.DragEdge.Right);
+//                swipeLayout.setDrag(SwipeLayout.DragEdge.Right, mItemPmRoot);
+                swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
             }
         }
 
+        public void bindView(Player bean) {
+            mTvItemSwipPmName.setText(bean.getName());
+//            mTvItemSwipPmNum.setText(bean.getNum());
+//            mTvItemSwipPmPosition.setText(bean.getPosition());
+        }
+
+        @OnClick({R.id.btn_pm_swip_edit, R.id.btn_pm_swip_delete})
+        public void onViewClicked(View view) {
+            switch (view.getId()) {
+                case R.id.btn_pm_swip_edit:
+                    break;
+                case R.id.btn_pm_swip_delete:
+                    break;
+            }
+        }
     }
 }

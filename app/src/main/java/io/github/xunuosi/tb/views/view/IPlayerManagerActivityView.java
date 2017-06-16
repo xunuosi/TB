@@ -19,11 +19,13 @@ public interface IPlayerManagerActivityView {
 
         void changeDialogState(boolean isShow, @Nullable Integer msgId);
 
-        void showView(List<Player> players);
-
         void changeRVState(boolean enable);
 
         void setRVLoadMoreState(boolean enable);
 
         void showEmptyView(boolean enable);
+
+        void showRefreshView(List<Player> players);
+
+        void showLoadMoreView(List<Player> players);
 }

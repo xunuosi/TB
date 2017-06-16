@@ -60,8 +60,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     AppCompatTextView tvTitle;
 
     @Inject
-    PlayerManagerAdapter<Player> mAdapter;
-    @Inject
     Context mContext;
     @Inject
     DaoSession session;
@@ -108,13 +106,12 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_player_manager);
 
-        mPMSwipeAdapter = new PMSwipeAdapter<>(new ArrayList<Player>());
-
         mRvPlayerManager.setHasFixedSize(false);
+        mPMSwipeAdapter = new PMSwipeAdapter<>(new ArrayList<Player>());
         mPMSwipeAdapter.setMode(SwipeItemManagerInterface.Mode.Single);
         mLayoutManager = new ScrollSmoothLineaerLayoutManager(this, LinearLayoutManager.VERTICAL, false, 500);
 
-        mRvPlayerManager.setLayoutManager(mLayoutManager);
+        mRvPlayerManager.setLayoutManager(new LinearLayoutManager(this));
         enableEmptyViewPolicy();
 
 //        mRvPlayerManager.setLoadMoreView(LayoutInflater.from(this)
@@ -122,7 +119,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
 //        mAdapter.enableLoadMore(true);
 
         mRvPlayerManager.reenableLoadmore();
-
         mRvPlayerManager.setAdapter(mPMSwipeAdapter);
 
         paint.setStrokeWidth(5);
@@ -130,7 +126,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         paint.setAntiAlias(true);
         paint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         mRvPlayerManager.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).paint(paint).build());
-
 
         mRvPlayerManager.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -147,6 +142,9 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
                 }
             }
         });
+
+
+
 
 
     }
@@ -198,13 +196,6 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
     }
 
     @Override
-    public void showView(List<Player> players) {
-        mPMSwipeAdapter.setData(players);
-        mPMSwipeAdapter.refresh();
-        changeDialogState(false, null);
-    }
-
-    @Override
     public void changeRVState(boolean enable) {
         mRvPlayerManager.setRefreshing(enable);
     }
@@ -225,6 +216,18 @@ public class PlayerManagerActivity extends BaseActivity implements IPlayerManage
         } else {
             mRvPlayerManager.hideEmptyView();
         }
+    }
+
+    @Override
+    public void showRefreshView(List<Player> players) {
+        mPMSwipeAdapter.setData(players);
+        changeDialogState(false, null);
+    }
+
+    @Override
+    public void showLoadMoreView(List<Player> players) {
+        mPMSwipeAdapter.insertNewList(players);
+        changeDialogState(false, null);
     }
 
     @Override
