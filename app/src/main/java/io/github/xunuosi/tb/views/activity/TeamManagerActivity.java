@@ -6,17 +6,19 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.layoutmanagers.ScrollSmoothLineaerLayoutManager;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -35,14 +37,14 @@ import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.adapter.TeamManagerAdapter;
 import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
+import io.github.xunuosi.tb.views.widget.PopWindowUtil;
 
 /**
  * Created by admin on 2017/6/3.
  * 球队管理界面
  */
 
-public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView {
-
+public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView, TeamManagerAdapter.PopWindowListener {
     @Inject
     TeamManagerAdapter<Team> mAdapter;
     @Inject
@@ -62,6 +64,11 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     UltimateRecyclerView rvTm;
     @BindView(R.id.tool_bar)
     Toolbar mToolBar;
+    @BindView(R.id.root_tm)
+    ConstraintLayout rootTm;
+
+    private PopWindowUtil popWindow;
+
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, TeamManagerActivity.class);
@@ -89,6 +96,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
         setSupportActionBar(mToolBar);
         tvTitle.setText(R.string.text_team_manager);
 
+        mAdapter.setListener(this);
         mAdapter.setData(new ArrayList<Team>());
         rvTm.setLayoutManager(new LinearLayoutManager(this));
         rvTm.setHasFixedSize(false);
@@ -113,6 +121,7 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
                 presenter.showView(AppConstant.Action.LOAD_MORE);
             }
         });
+
     }
 
     @Override
@@ -180,4 +189,14 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
         super.onDestroy();
     }
 
+    @Override
+    public void showPopWindow(View v,int touchX, int touchY) {
+        popWindow = new PopWindowUtil(mContext, R.layout.layout_pop_menu, v);
+        popWindow.show(touchX, touchY);
+    }
+
+    @Override
+    public void hidePopWindow() {
+        popWindow.dismiss();
+    }
 }

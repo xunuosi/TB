@@ -2,7 +2,9 @@ package io.github.xunuosi.tb.views.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
@@ -23,11 +25,18 @@ import io.github.xunuosi.tb.views.holder.TeamItemHolder;
 public class TeamManagerAdapter<T> extends UltimateViewAdapter {
     private List<T> mList;
     private LayoutInflater layoutInflater;
+    private PopWindowListener listener;
+    private int touchX, touchY;
 
     @Inject
     public TeamManagerAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
+
+    public void setListener(PopWindowListener listener) {
+        this.listener = listener;
+    }
+
 
     public void setData(List<T> list) {
         if (mList == null) {
@@ -49,19 +58,36 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
         if (bean instanceof Team) {
             final TeamItemHolder mHolder = (TeamItemHolder) holder;
             mHolder.bindData(bean);
+
+            mHolder.itemTmRoot.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            touchX = (int) event.getX();
+                            touchY = (int) event.getY();
+                            Log.d("xns", "touchX:" + event.getX() + ",touchY:" + event.getY());
+                            break;
+                    }
+                    return false;
+                }
+            });
             mHolder.itemTmRoot.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-
-                    return true;
+                    if (listener != null) {
+                        listener.showPopWindow(v,touchX, touchY);
+                        return true;
+                    }
+                    return false;
                 }
             });
         }
     }
 
     public interface PopWindowListener {
-        
-        void showPopWindow();
+
+        void showPopWindow(View v, int x, int y);
 
         void hidePopWindow();
     }

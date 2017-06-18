@@ -11,4 +11,5 @@
     <color name="colorTitle">#009688</color>
     <color name="colorGreen">#2eecd9</color>
     <color name="colorBlue">#328cfa</color>
+    <color name="text_dark">#454545</color>
 </resources>
