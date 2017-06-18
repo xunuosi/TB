@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerTMDetailComponent;
 import io.github.xunuosi.tb.dagger.module.TMDetailModule;
+import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.presenter.TMDetailPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.views.view.ITMDetailView;
@@ -48,6 +49,8 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.initializeInjector();
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        presenter.initShow(intent);
     }
 
     private void initializeInjector() {
@@ -106,6 +109,11 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
         } else {
             LoadingUtil.closeProgressDialog();
         }
+    }
+
+    @Override
+    public void show(Team team) {
+        etTeamName.setText(team.getName());
     }
 
     @Override

@@ -53,8 +53,8 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        T bean = mList.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final T bean = mList.get(position);
         if (bean instanceof Team) {
             final TeamItemHolder mHolder = (TeamItemHolder) holder;
             mHolder.bindData(bean);
@@ -66,7 +66,6 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
                         case MotionEvent.ACTION_DOWN:
                             touchX = (int) event.getX();
                             touchY = (int) event.getY();
-                            Log.d("xns", "touchX:" + event.getX() + ",touchY:" + event.getY());
                             break;
                     }
                     return false;
@@ -76,7 +75,7 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
                 @Override
                 public boolean onLongClick(View v) {
                     if (listener != null) {
-                        listener.showPopWindow(v,touchX, touchY);
+                        listener.showPopWindow(v, touchX, touchY, position);
                         return true;
                     }
                     return false;
@@ -87,7 +86,7 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
 
     public interface PopWindowListener {
 
-        void showPopWindow(View v, int x, int y);
+        void showPopWindow(View v, int x, int y, int position);
 
         void hidePopWindow();
     }

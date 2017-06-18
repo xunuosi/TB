@@ -190,8 +190,10 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     }
 
     @Override
-    public void showPopWindow(View v,int touchX, int touchY) {
+    public void showPopWindow(View v, int touchX, int touchY, int position) {
         popWindow = new PopWindowUtil(mContext, R.layout.layout_pop_menu, v);
+        popWindow.setAdapterPosi(position);
+        popWindow.setPresenter(presenter);
         popWindow.show(touchX, touchY);
     }
 

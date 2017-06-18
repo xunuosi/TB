@@ -1,6 +1,8 @@
 package io.github.xunuosi.tb.presenter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Team;
+import io.github.xunuosi.tb.views.activity.TMDetailActivity;
 import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 
 /**
@@ -21,6 +24,7 @@ import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView, DaoSession> {
 
     private List<Team> teams = new ArrayList<>();
+    private Team actionTeam;
 
     @Inject
     public TeamManagerPresenter(ITeamManagerActivityView view, DaoSession daoSession) {
@@ -30,6 +34,9 @@ public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView
 
     public void gotoActivity(Intent intent) {
         if (intent != null) {
+            if (actionTeam != null) {
+                intent.putExtra(AppConstant.Team.BEAN, actionTeam);
+            }
             view().gotoActivity(intent);
         }
     }
@@ -73,6 +80,22 @@ public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView
             case AppConstant.Action.LOAD_MORE:
 
                 break;
+        }
+    }
+
+    /**
+     * @param position:点击时操作的Item的位置
+     */
+    public void editTeam(Context context, int position) {
+        if (position != -1) {
+            actionTeam = teams.get(position);
+            gotoActivity(TMDetailActivity.getCallIntent(context));
+        }
+    }
+
+    public void deleteTeam(int position) {
+        if (position != -1) {
+            actionTeam = teams.get(position);
         }
     }
 }

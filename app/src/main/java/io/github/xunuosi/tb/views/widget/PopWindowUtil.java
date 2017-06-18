@@ -2,6 +2,7 @@ package io.github.xunuosi.tb.views.widget;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import io.github.xunuosi.tb.R;
+import io.github.xunuosi.tb.presenter.BasePresenter;
+import io.github.xunuosi.tb.presenter.TeamManagerPresenter;
 import io.github.xunuosi.tb.utils.ScreenUtil;
 
 /**
@@ -25,6 +28,9 @@ public class PopWindowUtil {
 
     private int mWidth;
     private int mHeight;
+
+    private int adapterPosi;
+    private BasePresenter presenter;
 
     public PopWindowUtil(final Context context, final int menuId, View parent) {
         this.context = context;
@@ -45,13 +51,18 @@ public class PopWindowUtil {
         contentView.findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (presenter != null) {
+                    ((TeamManagerPresenter) presenter).editTeam(context, adapterPosi);
+                    dismiss();
+                }
             }
         });
         contentView.findViewById(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (presenter != null) {
+                    ((TeamManagerPresenter)presenter).deleteTeam(adapterPosi);
+                }
             }
         });
 
@@ -85,11 +96,21 @@ public class PopWindowUtil {
     }
 
     public void dismiss() {
-        mWindow.dismiss();
+        if (isShowing()) {
+            mWindow.dismiss();
+        }
     }
 
     public boolean isShowing() {
         return mWindow.isShowing();
+    }
+
+    public void setPresenter(BasePresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    public void setAdapterPosi(int adapterPosi) {
+        this.adapterPosi = adapterPosi;
     }
 
 }

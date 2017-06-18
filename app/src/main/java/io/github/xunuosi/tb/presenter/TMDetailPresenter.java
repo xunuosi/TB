@@ -2,6 +2,7 @@ package io.github.xunuosi.tb.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.math.MathUtils;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.data.db.TeamDao;
+import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.views.activity.TeamManagerActivity;
 import io.github.xunuosi.tb.views.view.ITMDetailView;
@@ -25,6 +27,7 @@ import io.github.xunuosi.tb.views.view.ITMDetailView;
 
 public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> {
     private Context context;
+    private Team team;
 
     @Inject
     public TMDetailPresenter(ITMDetailView view, DaoSession daoSession) {
@@ -76,5 +79,12 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
         if (intent != null) {
             view().gotoActivity(intent);
         }
+    }
+
+    public void initShow(Intent intent) {
+        if (intent != null) {
+            team = intent.getParcelableExtra(AppConstant.Team.BEAN);
+        }
+        view().show(team);
     }
 }
