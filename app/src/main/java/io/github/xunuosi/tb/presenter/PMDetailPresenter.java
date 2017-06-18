@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.R;
@@ -25,7 +27,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
     private final int ACTION_TYPE_EDIT= 1;
     // 记录当前操作是修改还是保存
     private int actionType;
-    private Long teamId;
+    private long teamId;
     private String teamName;
     private int position;
     private int num;
@@ -119,10 +121,10 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
      */
     private boolean checkoutDataIsExist() {
         try {
-            QueryBuilder<Player> queryBuilder = model.getPlayerDao().queryBuilder();
-            queryBuilder.whereOr(PlayerDao.Properties.Name.eq(name),
-                    PlayerDao.Properties.Num.eq(num));
-            queryBuilder.uniqueOrThrow();
+            QueryBuilder<Player> qb = model.getPlayerDao().queryBuilder();
+            qb.where(PlayerDao.Properties.TeamId.eq(teamId),
+                    qb.or(PlayerDao.Properties.Name.eq(name), PlayerDao.Properties.Num.eq(num)));
+            qb.uniqueOrThrow();
         } catch (Exception e) {
             return false;
         }
@@ -154,7 +156,7 @@ public class PMDetailPresenter extends BasePresenter<IPMDetailActivityView, DaoS
             Player player = new Player();
             player.setName(name);
             player.setTeamName(teamName);
-            player.setTeamId(teamId.intValue());
+            player.setTeamId(teamId);
             player.setSex(sex);
             player.setPosition(role);
             player.setCardNum(cardNum);
