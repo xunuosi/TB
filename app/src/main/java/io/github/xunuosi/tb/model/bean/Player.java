@@ -20,7 +20,7 @@ public class Player implements Parcelable {
     private String sex;
     private String name;
     private int num;
-    private int teamId;
+    private long teamId;
     private String teamName;
     private String cardNum;
     private String position;
@@ -29,9 +29,9 @@ public class Player implements Parcelable {
     }
 
 
-    @Generated(hash = 1606293319)
+    @Generated(hash = 2075065980)
     public Player(Long id, String avator_url, String sex, String name, int num,
-            int teamId, String teamName, String cardNum, String position) {
+            long teamId, String teamName, String cardNum, String position) {
         this.id = id;
         this.avator_url = avator_url;
         this.sex = sex;
@@ -50,7 +50,7 @@ public class Player implements Parcelable {
         sex = in.readString();
         name = in.readString();
         num = in.readInt();
-        teamId = in.readInt();
+        teamId = in.readLong();
         teamName = in.readString();
         cardNum = in.readString();
         position = in.readString();
@@ -100,11 +100,11 @@ public class Player implements Parcelable {
         this.num = num;
     }
 
-    public int getTeamId() {
+    public long getTeamId() {
         return this.teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(long teamId) {
         this.teamId = teamId;
     }
 
@@ -169,7 +169,7 @@ public class Player implements Parcelable {
         dest.writeString(sex);
         dest.writeString(name);
         dest.writeInt(num);
-        dest.writeInt(teamId);
+        dest.writeLong(teamId);
         dest.writeString(teamName);
         dest.writeString(cardNum);
         dest.writeString(position);

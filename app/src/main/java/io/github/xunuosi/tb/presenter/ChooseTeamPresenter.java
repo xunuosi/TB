@@ -33,7 +33,7 @@ public class ChooseTeamPresenter extends BasePresenter<IChooseTeamActivityView, 
     public void gotoActivity(Intent intent) {
         if (!checkDataIsEmpty()) {
             if (intent != null) {
-                intent.putExtra(AppConstant.Team.TEAM_ID, teams.get(position).getId());
+                intent.putExtra(AppConstant.Team.TEAM_ID, teams.get(position).getTeamId());
                 intent.putExtra(AppConstant.Team.TEAM_NAME, teams.get(position).getName());
                 view().gotoActivity(intent);
             }

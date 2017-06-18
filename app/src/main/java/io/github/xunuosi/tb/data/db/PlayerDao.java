@@ -29,7 +29,7 @@ public class PlayerDao extends AbstractDao<Player, Long> {
         public final static Property Sex = new Property(2, String.class, "sex", false, "SEX");
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
         public final static Property Num = new Property(4, int.class, "num", false, "NUM");
-        public final static Property TeamId = new Property(5, int.class, "teamId", false, "TEAM_ID");
+        public final static Property TeamId = new Property(5, long.class, "teamId", false, "TEAM_ID");
         public final static Property TeamName = new Property(6, String.class, "teamName", false, "TEAM_NAME");
         public final static Property CardNum = new Property(7, String.class, "cardNum", false, "CARD_NUM");
         public final static Property Position = new Property(8, String.class, "position", false, "POSITION");
@@ -162,7 +162,7 @@ public class PlayerDao extends AbstractDao<Player, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // sex
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
             cursor.getInt(offset + 4), // num
-            cursor.getInt(offset + 5), // teamId
+            cursor.getLong(offset + 5), // teamId
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // teamName
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // cardNum
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // position
@@ -177,7 +177,7 @@ public class PlayerDao extends AbstractDao<Player, Long> {
         entity.setSex(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setNum(cursor.getInt(offset + 4));
-        entity.setTeamId(cursor.getInt(offset + 5));
+        entity.setTeamId(cursor.getLong(offset + 5));
         entity.setTeamName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setCardNum(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setPosition(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));

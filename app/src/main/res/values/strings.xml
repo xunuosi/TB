@@ -35,4 +35,5 @@
     <string name="attention_delete_data">Is being deleted</string>
     <string name="attention_fail">Action Fail</string>
     <string name="attention_success">Action Success</string>
+    <string name="attention_tName_is_existed">Team name is existed</string>
 </resources>

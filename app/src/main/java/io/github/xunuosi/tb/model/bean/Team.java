@@ -14,12 +14,14 @@ public class Team {
     private Long id;
     private String name;
     private String avator_team;
+    private long teamId;
 
-    @Generated(hash = 863188931)
-    public Team(Long id, String name, String avator_team) {
+    @Generated(hash = 1760585996)
+    public Team(Long id, String name, String avator_team, long teamId) {
         this.id = id;
         this.name = name;
         this.avator_team = avator_team;
+        this.teamId = teamId;
     }
     @Generated(hash = 882286361)
     public Team() {
@@ -41,5 +43,21 @@ public class Team {
     }
     public void setAvator_team(String avator_team) {
         this.avator_team = avator_team;
+    }
+    public long getTeamId() {
+        return this.teamId;
+    }
+    public void setTeamId(long teamId) {
+        this.teamId = teamId;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", avator_team='" + avator_team + '\'' +
+                ", teamId=" + teamId +
+                '}';
     }
 }

@@ -3,13 +3,17 @@ package io.github.xunuosi.tb.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.math.MathUtils;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.data.db.DaoSession;
+import io.github.xunuosi.tb.data.db.TeamDao;
 import io.github.xunuosi.tb.model.bean.Team;
 import io.github.xunuosi.tb.views.activity.TeamManagerActivity;
 import io.github.xunuosi.tb.views.view.ITMDetailView;
@@ -39,6 +43,7 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
             view().changeDialogState(true, R.string.attention_sending_data);
             Team bean = new Team();
             bean.setName(tName);
+            bean.setTeamId(tName.hashCode());
             try {
                 model.getTeamDao().insert(bean);
             } catch (Exception e) {
@@ -55,8 +60,16 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        return true;
+        QueryBuilder<Team> qb = model.getTeamDao().queryBuilder();
+        qb.where(TeamDao.Properties.Name.eq(tName));
+        try {
+            qb.uniqueOrThrow();
+        } catch (Exception e) {
+            return true;
+        }
+        String msg = context.getString(R.string.attention_tName_is_existed);
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     public void gotoActivity(Intent intent) {
