@@ -2,10 +2,14 @@ package io.github.xunuosi.tb.views.widget;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import io.github.xunuosi.tb.R;
@@ -18,7 +22,7 @@ import io.github.xunuosi.tb.utils.ScreenUtil;
  *
  */
 
-public class PopWindowUtil {
+public class PopWindowUtil implements View.OnClickListener {
 
     private PopupWindow mWindow;
     private View parent;
@@ -29,7 +33,9 @@ public class PopWindowUtil {
     private int mHeight;
 
     private int adapterPosi;
-    private BasePresenter presenter;
+    private boolean isPopAdapter = false;
+    private LinearLayout rootAction;
+    private PopActionListener listener;
 
     public PopWindowUtil(final Context context, final int menuId, View parent) {
         this.context = context;
@@ -47,26 +53,34 @@ public class PopWindowUtil {
         mWindow.setClippingEnabled(false);
         mWindow.setFocusable(true);
 
-        contentView.findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (presenter != null) {
-                    ((TeamManagerPresenter) presenter).editTeam(context, adapterPosi);
-                    dismiss();
-                }
-            }
-        });
-        contentView.findViewById(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (presenter != null) {
-                    ((TeamManagerPresenter)presenter).deleteTeam(adapterPosi);
-                }
-            }
-        });
+
+        rootAction = (LinearLayout) contentView.findViewById(R.id.root_action);
+
+        for (int i=0;i<rootAction.getChildCount();i++) {
+            rootAction.getChildAt(i).setOnClickListener(this);
+        }
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if (isPopAdapter) {
+            listener.onItemAndAdapterClick(v, rootAction.indexOfChild(v), adapterPosi);
+        } else {
+            listener.onItemClick(v, rootAction.indexOfChild(v));
+        }
+    }
+
+    public void setListener(PopActionListener listener) {
+        this.listener = listener;
+    }
+
+    public interface PopActionListener {
+
+        void onItemClick(View view, int index);
+
+        void onItemAndAdapterClick(View view, int index, int adapterPosition);
+    }
 
     /**
      * 显示弹窗的方法
@@ -104,11 +118,8 @@ public class PopWindowUtil {
         return mWindow.isShowing();
     }
 
-    public void setPresenter(BasePresenter presenter) {
-        this.presenter = presenter;
-    }
-
     public void setAdapterPosi(int adapterPosi) {
+        isPopAdapter = true;
         this.adapterPosi = adapterPosi;
     }
 

@@ -44,7 +44,8 @@ import io.github.xunuosi.tb.views.widget.PopWindowUtil;
  * 球队管理界面
  */
 
-public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView, TeamManagerAdapter.PopWindowListener {
+public class TeamManagerActivity extends BaseActivity implements ITeamManagerActivityView,
+        TeamManagerAdapter.PopWindowListener,PopWindowUtil.PopActionListener {
     @Inject
     TeamManagerAdapter<Team> mAdapter;
     @Inject
@@ -158,6 +159,11 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     }
 
     @Override
+    public void delAdapterData(int position) {
+        mAdapter.removeItemAtIndex(position);
+    }
+
+    @Override
     public void changeDialogState(boolean isShow, @Nullable Integer msgId) {
         String msg = null;
         if (msgId != null) {
@@ -192,13 +198,32 @@ public class TeamManagerActivity extends BaseActivity implements ITeamManagerAct
     @Override
     public void showPopWindow(View v, int touchX, int touchY, int position) {
         popWindow = new PopWindowUtil(mContext, R.layout.layout_pop_menu, v);
+        popWindow.setListener(this);
         popWindow.setAdapterPosi(position);
-        popWindow.setPresenter(presenter);
         popWindow.show(touchX, touchY);
     }
 
     @Override
     public void hidePopWindow() {
         popWindow.dismiss();
+    }
+
+    @Override
+    public void onItemClick(View view, int index) {
+
+    }
+
+    @Override
+    public void onItemAndAdapterClick(View view, int index, int adapterPosition) {
+        switch (index) {
+            case 0:
+                presenter.editTeam(mContext, adapterPosition);
+                hidePopWindow();
+                break;
+            case 1:
+                presenter.deleteTeam(adapterPosition);
+                hidePopWindow();
+                break;
+        }
     }
 }

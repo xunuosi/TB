@@ -14,11 +14,13 @@ import io.github.xunuosi.tb.model.bean.Team;
 
 public interface ITeamManagerActivityView {
 
-        void gotoActivity(Intent intent);
+    void gotoActivity(Intent intent);
 
-        void changeDialogState(boolean isShow, @Nullable Integer msgId);
+    void changeDialogState(boolean isShow, @Nullable Integer msgId);
 
-        void showView(List<Team> teams);
+    void showView(List<Team> teams);
 
-        void changeRVState(boolean enable);
+    void changeRVState(boolean enable);
+
+    void delAdapterData(int position);
 }

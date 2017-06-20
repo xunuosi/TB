@@ -84,6 +84,13 @@ public class TeamManagerAdapter<T> extends UltimateViewAdapter {
         }
     }
 
+    public void removeItemAtIndex(int position) {
+        if (mList != null) {
+            mList.remove(position);
+            notifyDataSetChanged();
+        }
+    }
+
     public interface PopWindowListener {
 
         void showPopWindow(View v, int x, int y, int position);

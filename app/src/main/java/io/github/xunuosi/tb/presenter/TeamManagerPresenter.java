@@ -24,7 +24,6 @@ import io.github.xunuosi.tb.views.view.ITeamManagerActivityView;
 public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView, DaoSession> {
 
     private List<Team> teams = new ArrayList<>();
-    private Team actionTeam;
 
     @Inject
     public TeamManagerPresenter(ITeamManagerActivityView view, DaoSession daoSession) {
@@ -34,9 +33,6 @@ public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView
 
     public void gotoActivity(Intent intent) {
         if (intent != null) {
-            if (actionTeam != null) {
-                intent.putExtra(AppConstant.Team.BEAN, actionTeam);
-            }
             view().gotoActivity(intent);
         }
     }
@@ -88,14 +84,35 @@ public class TeamManagerPresenter extends BasePresenter<ITeamManagerActivityView
      */
     public void editTeam(Context context, int position) {
         if (position != -1) {
-            actionTeam = teams.get(position);
-            gotoActivity(TMDetailActivity.getCallIntent(context));
+            Team actionTeam = teams.get(position);
+            gotoActivityWithTeam(TMDetailActivity.getCallIntent(context), actionTeam);
+        }
+    }
+
+    private void gotoActivityWithTeam(Intent intent, Team team) {
+        if (intent != null) {
+            intent.putExtra(AppConstant.Team.BEAN, team);
+            view().gotoActivity(intent);
         }
     }
 
     public void deleteTeam(int position) {
         if (position != -1) {
-            actionTeam = teams.get(position);
+            try {
+                view().changeDialogState(true, R.string.attention_sending_data);
+                Team actionTeam = teams.get(position);
+                model.getTeamDao().delete(actionTeam);
+            } catch (Exception e) {
+                e.printStackTrace();
+                deleteError(e.getMessage());
+                return;
+            }
+            view().delAdapterData(position);
+            view().changeDialogState(false, null);
         }
+    }
+
+    private void deleteError(String message) {
+
     }
 }

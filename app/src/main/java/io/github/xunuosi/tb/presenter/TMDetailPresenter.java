@@ -104,10 +104,12 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
     public void initShow(Intent intent) {
         if (intent != null) {
             team = intent.getParcelableExtra(AppConstant.Team.BEAN);
-            actionType = ACTION_TYPE_EDIT;
-            view().show(team);
-        } else {
-            actionType = ACTION_TYPE_SAVE;
+            if (team != null) {
+                actionType = ACTION_TYPE_EDIT;
+                view().show(team);
+            } else {
+                actionType = ACTION_TYPE_SAVE;
+            }
         }
     }
 }
