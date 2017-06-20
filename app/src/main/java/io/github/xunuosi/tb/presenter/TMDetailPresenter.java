@@ -2,9 +2,7 @@ package io.github.xunuosi.tb.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.math.MathUtils;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -26,8 +24,11 @@ import io.github.xunuosi.tb.views.view.ITMDetailView;
  */
 
 public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> {
+    private final int ACTION_TYPE_SAVE = 0;
+    private final int ACTION_TYPE_EDIT = 1;
     private Context context;
     private Team team;
+    private int actionType;
 
     @Inject
     public TMDetailPresenter(ITMDetailView view, DaoSession daoSession) {
@@ -41,20 +42,39 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
 
     }
 
-    public void addTeam(@Nullable String avatorUrl, String tName) {
+    public void saveOrEditTeam(@Nullable String avatorUrl, String tName) {
         if (checkData(avatorUrl, tName)) {
-            view().changeDialogState(true, R.string.attention_sending_data);
-            Team bean = new Team();
-            bean.setName(tName);
-            bean.setTeamId(tName.hashCode());
-            try {
-                model.getTeamDao().insert(bean);
-            } catch (Exception e) {
-                e.printStackTrace();
+            switch (actionType) {
+                case ACTION_TYPE_SAVE:
+                    addTeam(avatorUrl, tName);
+                    break;
+                case ACTION_TYPE_EDIT:
+                    editTeam(avatorUrl, tName);
+                    break;
             }
-            view().changeDialogState(false, null);
-            gotoActivity(TeamManagerActivity.getCallIntent((Context) view()));
         }
+    }
+
+    private void editTeam(@Nullable String avatorUrl, String tName) {
+        view().changeDialogState(true, R.string.attention_sending_data);
+        team.setName(tName);
+        model.getTeamDao().update(team);
+        gotoActivity(TeamManagerActivity.getCallIntent(context));
+        view().changeDialogState(false, null);
+    }
+
+    private void addTeam(@Nullable String avatorUrl, String tName) {
+        view().changeDialogState(true, R.string.attention_sending_data);
+        Team bean = new Team();
+        bean.setName(tName);
+        bean.setTeamId(tName.hashCode());
+        try {
+            model.getTeamDao().insert(bean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        gotoActivity(TeamManagerActivity.getCallIntent(context));
+        view().changeDialogState(false, null);
     }
 
     private boolean checkData(String avatorUrl, String tName) {
@@ -84,7 +104,10 @@ public class TMDetailPresenter extends BasePresenter<ITMDetailView, DaoSession> 
     public void initShow(Intent intent) {
         if (intent != null) {
             team = intent.getParcelableExtra(AppConstant.Team.BEAN);
+            actionType = ACTION_TYPE_EDIT;
+            view().show(team);
+        } else {
+            actionType = ACTION_TYPE_SAVE;
         }
-        view().show(team);
     }
 }

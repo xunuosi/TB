@@ -50,6 +50,7 @@
         <item name="android:textColor">@color/text_dark</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_rect_selector</item>
     </style>
 
 </resources>

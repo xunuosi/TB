@@ -88,7 +88,7 @@ public class TMDetailActivity extends BaseActivity implements ITMDetailView {
                 break;
             case R.id.im_add:
             case R.id.btn_tm_detail_submit:
-                presenter.addTeam(null, etTeamName.getText().toString().trim());
+                presenter.saveOrEditTeam(null, etTeamName.getText().toString().trim());
                 break;
         }
     }
