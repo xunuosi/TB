@@ -20,7 +20,6 @@ import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerChooseTeamComponent;
 import io.github.xunuosi.tb.dagger.module.ChooseTeamModule;
-import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.presenter.ChooseTeamPresenter;
 import io.github.xunuosi.tb.utils.LoadingUtil;
 import io.github.xunuosi.tb.utils.ToastUtil;
@@ -39,8 +38,7 @@ public class ChooseTeamActivity extends BaseActivity implements IChooseTeamActiv
     ChooseTeamPresenter presenter;
     @Inject
     ArrayAdapter<String> mAdapter;
-    @Inject
-    DaoSession mDaoSession;
+
     @BindView(R.id.im_add)
     ImageView mImAdd;
     @BindView(R.id.tv_title)

@@ -31,10 +31,10 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
     private static final int ACTION_TEAM_MANAGER = 2;
     private static final int ACTION_PLAYER_MANAGER = 3;
 
+    private List<String> data;
+
     @BindView(R.id.rv_match_home)
     UltimateRecyclerView mRvMatchHome;
-
-    private List<String> data;
     @Inject
     SimpleAdapter<String> mAdapter;
     @Inject

@@ -41,6 +41,7 @@
     <string name="attention_success">操作成功</string>
     <string name="attention_tName_is_existed">队伍名称已存在请更换</string>
     <string name="text_vs">VS</string>
+    <string name="attention_select_same_team">对战选择了同一支队伍</string>
 
 
 </resources>

@@ -50,7 +50,7 @@ public class ToastUtil {
         }
         //设置toast居中显示
         mToast.setGravity(Gravity.CENTER, 0, 0);
-        mToast.setDuration(Toast.LENGTH_LONG);
+        mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.setView(view);
     }
 

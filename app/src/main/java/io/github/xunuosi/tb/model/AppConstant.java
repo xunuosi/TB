@@ -6,6 +6,8 @@ package io.github.xunuosi.tb.model;
  */
 
 public interface AppConstant {
+     int TYPE_HOME_TEAM = 0;
+     int TYPE_VISITING_TEAM = 1;
 
     interface Team {
         String BEAN = "team_bean";
