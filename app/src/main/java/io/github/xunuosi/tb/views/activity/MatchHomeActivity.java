@@ -81,7 +81,7 @@ public class MatchHomeActivity extends BaseActivity implements SimpleAdapter.ite
     public void onItemClick(int position) {
         switch (position) {
             case ACTION_TEC_TOTAL:
-
+                startActivity(ChooseBattleActivity.getCallIntent(mContext));
                 break;
             case ACTION_MATCH_MANAGER:
 

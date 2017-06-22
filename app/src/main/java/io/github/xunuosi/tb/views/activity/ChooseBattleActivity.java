@@ -1,5 +1,7 @@
 package io.github.xunuosi.tb.views.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -11,6 +13,10 @@ import io.github.xunuosi.tb.R;
  */
 
 public class ChooseBattleActivity extends BaseActivity {
+
+    public static Intent getCallIntent(Context context) {
+        return new Intent(context, ChooseBattleActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

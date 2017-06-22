@@ -36,4 +36,8 @@
     <string name="attention_fail">Action Fail</string>
     <string name="attention_success">Action Success</string>
     <string name="attention_tName_is_existed">Team name is existed</string>
+    <string name="text_entry_tecTotal">Entry Tec total</string>
+    <string name="text_home_team">Home Team</string>
+    <string name="text_visiting_team">Visiting Team</string>
+    <string name="text_vs">VS</string>
 </resources>

@@ -12,4 +12,5 @@
     <color name="colorGreen">#2eecd9</color>
     <color name="colorBlue">#328cfa</color>
     <color name="text_dark">#454545</color>
+    <color name="colorDarkRed">#9b1010</color>
 </resources>

@@ -18,6 +18,9 @@
     <string name="text_team_number">球队号码</string>
     <string name="text_edit">修改</string>
     <string name="text_delete">删除</string>
+    <string name="text_entry_tecTotal">进入技术统计</string>
+    <string name="text_home_team">主队</string>
+    <string name="text_visiting_team">客队</string>
     <!--Action-->
     <string name="action_submit">确认提交</string>
     <!--Attention-->
@@ -37,4 +40,7 @@
     <string name="attention_fail">操作失败</string>
     <string name="attention_success">操作成功</string>
     <string name="attention_tName_is_existed">队伍名称已存在请更换</string>
+    <string name="text_vs">VS</string>
+
+
 </resources>
