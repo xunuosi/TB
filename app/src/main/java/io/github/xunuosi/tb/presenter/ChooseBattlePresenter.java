@@ -2,7 +2,6 @@ package io.github.xunuosi.tb.presenter;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,20 +9,22 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.github.xunuosi.tb.R;
+import io.github.xunuosi.tb.TBApplication;
 import io.github.xunuosi.tb.data.db.DaoSession;
 import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.model.bean.Team;
+import io.github.xunuosi.tb.views.activity.MatchActivity;
 import io.github.xunuosi.tb.views.view.IChooseBattleActivityView;
-import io.github.xunuosi.tb.views.view.IChooseTeamActivityView;
 
 /**
  * Created by admin on 2017/6/3.
- *
  */
 
 public class ChooseBattlePresenter extends BasePresenter<IChooseBattleActivityView, DaoSession> {
 
     private List<Team> teams = new ArrayList<>();
+    private int htItemPosition;
+    private int vtItemPosition;
 
     @Inject
     public ChooseBattlePresenter(IChooseBattleActivityView view, DaoSession daoSession) {
@@ -32,15 +33,11 @@ public class ChooseBattlePresenter extends BasePresenter<IChooseBattleActivityVi
     }
 
     public void gotoActivity(Intent intent) {
-//        if (!checkDataIsEmpty()) {
-//            if (intent != null) {
-//                intent.putExtra(AppConstant.Team.TEAM_ID, teams.get(position).getTeamId());
-//                intent.putExtra(AppConstant.Team.TEAM_NAME, teams.get(position).getName());
-//                view().gotoActivity(intent);
-//            }
-//        } else {
-//            view().showErrorToastMsg(R.string.attention_team_is_empty);
-//        }
+        if (intent != null) {
+            intent.putExtra(AppConstant.Team.TEAM_TYPE_HOME, teams.get(htItemPosition));
+            intent.putExtra(AppConstant.Team.TEAM_TYPE_VISITING, teams.get(vtItemPosition));
+            view().gotoActivity(intent);
+        }
     }
 
 
@@ -72,6 +69,8 @@ public class ChooseBattlePresenter extends BasePresenter<IChooseBattleActivityVi
             view().showErrorToastMsg(R.string.attention_team_is_empty);
             return;
         }
-
+        this.htItemPosition = htItemPosition;
+        this.vtItemPosition = vtItemPosition;
+        gotoActivity(MatchActivity.getCallIntent(TBApplication.getContext()));
     }
 }

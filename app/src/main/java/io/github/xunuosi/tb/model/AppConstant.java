@@ -6,13 +6,13 @@ package io.github.xunuosi.tb.model;
  */
 
 public interface AppConstant {
-     int TYPE_HOME_TEAM = 0;
-     int TYPE_VISITING_TEAM = 1;
 
     interface Team {
         String BEAN = "team_bean";
         String TEAM_ID = "team_id";
         String TEAM_NAME = "team_name";
+        String TEAM_TYPE_HOME = "home_team";
+        String TEAM_TYPE_VISITING = "visiting_team";
     }
 
     interface Player {

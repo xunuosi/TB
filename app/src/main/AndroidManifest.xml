@@ -32,6 +32,10 @@
         <activity android:name=".views.activity.PMDetailActivity"/>
 
         <activity android:name=".views.activity.ChooseBattleActivity"/>
+
+        <activity android:name=".views.activity.MatchActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullScreen"/>
     </application>
 
 </manifest>

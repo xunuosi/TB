@@ -18,7 +18,6 @@ import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerChooseBattleComponent;
 import io.github.xunuosi.tb.dagger.module.ChooseBattleModule;
-import io.github.xunuosi.tb.model.AppConstant;
 import io.github.xunuosi.tb.presenter.ChooseBattlePresenter;
 import io.github.xunuosi.tb.utils.ToastUtil;
 import io.github.xunuosi.tb.views.view.IChooseBattleActivityView;
@@ -91,7 +90,7 @@ public class ChooseBattleActivity extends BaseActivity implements IChooseBattleA
 
     @Override
     public void gotoActivity(Intent intent) {
-
+        startActivity(intent);
     }
 
     @Override
