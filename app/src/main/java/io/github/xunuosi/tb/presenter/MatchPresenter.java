@@ -38,9 +38,8 @@ public class MatchPresenter extends BasePresenter<IMatchActivityView, DaoSession
             hTeamBean = intent.getParcelableExtra(AppConstant.Team.TEAM_TYPE_HOME);
             vTeamBean = intent.getParcelableExtra(AppConstant.Team.TEAM_TYPE_VISITING);
         }
-
         if (hTeamBean != null && vTeamBean != null) {
-            view().test(hTeamBean.getName(), vTeamBean.getName());
+            view().initShow(hTeamBean.getName(), vTeamBean.getName());
         }
     }
 }

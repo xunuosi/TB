@@ -16,5 +16,5 @@ public interface IMatchActivityView {
 
         void showErrorToastMsg(int msgId);
 
-        void test(String name, String name1);
+        void initShow(String hTName, String vTName);
 }

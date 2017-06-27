@@ -1,6 +1,5 @@
 package io.github.xunuosi.tb.views.activity;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.github.xunuosi.tb.R;
 import io.github.xunuosi.tb.dagger.component.DaggerMatchComponent;
 import io.github.xunuosi.tb.dagger.module.MatchModule;
@@ -28,10 +28,10 @@ public class MatchActivity extends BaseActivity implements IMatchActivityView {
     Context context;
     @Inject
     MatchPresenter presenter;
-    @BindView(R.id.tv_home)
-    TextView tvHome;
-    @BindView(R.id.tv_visiting)
-    TextView tvVisiting;
+    @BindView(R.id.tv_match_hTeamBtn)
+    TextView mTvMatchHTeamBtn;
+    @BindView(R.id.tv_match_vTeamBtn)
+    TextView mTvMatchVTeamBtn;
 
     public static Intent getCallIntent(Context context) {
         return new Intent(context, MatchActivity.class);
@@ -98,8 +98,12 @@ public class MatchActivity extends BaseActivity implements IMatchActivityView {
     }
 
     @Override
-    public void test(String name, String name1) {
-        tvHome.setText(name);
-        tvVisiting.setText(name1);
+    public void initShow(String hTName, String vTName) {
+        mTvMatchHTeamBtn.setText(hTName);
+        mTvMatchVTeamBtn.setText(vTName);
+    }
+
+    @OnClick(R.id.tv_match_changeBtn)
+    public void onViewClicked() {
     }
 }

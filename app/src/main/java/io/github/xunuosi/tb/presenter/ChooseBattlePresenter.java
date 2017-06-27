@@ -61,12 +61,12 @@ public class ChooseBattlePresenter extends BasePresenter<IChooseBattleActivityVi
     }
 
     public void checkoutData(int htItemPosition, int vtItemPosition) {
-        if (htItemPosition == vtItemPosition) {
-            view().showErrorToastMsg(R.string.attention_select_same_team);
-            return;
-        }
         if (checkDataIsEmpty(htItemPosition) || checkDataIsEmpty(vtItemPosition)) {
             view().showErrorToastMsg(R.string.attention_team_is_empty);
+            return;
+        }
+        if (htItemPosition == vtItemPosition) {
+            view().showErrorToastMsg(R.string.attention_select_same_team);
             return;
         }
         this.htItemPosition = htItemPosition;

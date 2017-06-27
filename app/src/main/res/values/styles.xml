@@ -34,6 +34,12 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="text_interface_white">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="TextButtonToolBar">
         <item name="android:background">@color/colorTitle</item>
         <item name="android:paddingLeft">16dp</item>

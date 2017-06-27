@@ -41,4 +41,5 @@
     <string name="text_visiting_team">Visiting Team</string>
     <string name="text_vs">VS</string>
     <string name="attention_select_same_team">Same team is error</string>
+    <string name="text_state_conversion">Att to Def</string>
 </resources>
