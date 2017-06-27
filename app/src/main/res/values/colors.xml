@@ -11,6 +11,10 @@
     <color name="colorTitle">#009688</color>
     <color name="colorGreen">#2eecd9</color>
     <color name="colorBlue">#328cfa</color>
+    <color name="color_dark_Blue">#0655b6</color>
     <color name="text_dark">#454545</color>
     <color name="colorDarkRed">#9b1010</color>
+    <!--team-->
+    <color name="ht_bg">#f92828</color>
+    <color name="vt_bg">#6698fc</color>
 </resources>
